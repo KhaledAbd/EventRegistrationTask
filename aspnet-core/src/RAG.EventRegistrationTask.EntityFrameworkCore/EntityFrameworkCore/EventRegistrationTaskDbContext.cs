@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RAG.EventRegistrationTask.Configurations;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -74,13 +75,10 @@ public class EventRegistrationTaskDbContext :
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
 
-        /* Configure your own tables/entities inside here */
+        #region events
+        builder.ApplyConfiguration(new EventConfiguration());
+        builder.ApplyConfiguration(new EventRegistrationConfiguration());
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(EventRegistrationTaskConsts.DbTablePrefix + "YourEntities", EventRegistrationTaskConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        #endregion
     }
 }
