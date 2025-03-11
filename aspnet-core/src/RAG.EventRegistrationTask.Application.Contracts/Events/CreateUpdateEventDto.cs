@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
-namespace RAG.EventRegistration.Events
+namespace RAG.EventRegistrationTask.Events
 {
     public class CreateUpdateEventDto:EntityDto<Guid>
     {
