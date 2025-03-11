@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RAG.EventRegistrationTask.Events;
 using RAG.EventRegistrationTask.Events.Entities;
+using RAG.EventRegistrationTask.Events.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,14 @@ namespace RAG.EventRegistrationTask.Mappings
     {
         public EventMappingProfile()
         {
-            CreateMap<Event, EventDto>();
-            CreateMap<CreateUpdateEventDto, Event>();
+
+            
+            CreateMap<Event, EventDto>()
+            // impilicit convert to string is not work must be by customResolver in Automapper.
+                .ForMember(c => c.Location, opt => opt.MapFrom(dest => $"{dest.Location.Government}, {dest.Location.City}, {dest.Location.Street}"))
+                   .ForMember(c => c.Capacity, opt => opt.MapFrom(dest => dest.Capacity.Value));
+            CreateMap<CreateUpdateEventDto, Event>()
+                .ForMember(c => c.Location, opt => opt.MapFrom(dest => new Location(dest.Government, dest.City, dest.Street)));
 
             CreateMap<EventRegistration,EventRegistrationDto>()
                 .ForMember(c => c.EventNameAr, dest => dest.MapFrom(c => c.Event.NameAr))
@@ -22,7 +29,7 @@ namespace RAG.EventRegistrationTask.Mappings
                 .ForMember(c => c.EventLink, dest => dest.MapFrom(c => c.Event.Link))
                 .ForMember(c => c.EventLocation, dest => dest.MapFrom(c => c.Event.Location));
 
-            CreateMap<CreateUpdateEventDto, EventRegistration>();
+            CreateMap<CreateUpdateEventRegistrationDto, EventRegistration>();
         }
     }
 }

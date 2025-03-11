@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RAG.EventRegistrationTask.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -11,9 +12,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace RAG.EventRegistrationTask.Migrations
 {
     [DbContext(typeof(EventRegistrationTaskDbContext))]
-    partial class EventRegistrationTaskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250311205055_change_Guid_ToINT")]
+    partial class change_Guid_ToINT
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,8 +25,9 @@ namespace RAG.EventRegistrationTask.Migrations
 
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.Event", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("TEXT")
@@ -95,11 +99,12 @@ namespace RAG.EventRegistrationTask.Migrations
 
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.EventRegistration", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("EventId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool?>("IsCanceled")
                         .HasColumnType("INTEGER");
@@ -1865,8 +1870,8 @@ namespace RAG.EventRegistrationTask.Migrations
                 {
                     b.OwnsOne("RAG.EventRegistrationTask.Events.ValueObjects.Capacity", "Capacity", b1 =>
                         {
-                            b1.Property<Guid>("EventId")
-                                .HasColumnType("TEXT");
+                            b1.Property<int>("EventId")
+                                .HasColumnType("INTEGER");
 
                             b1.Property<int?>("Value")
                                 .HasColumnType("INTEGER")
@@ -1882,8 +1887,8 @@ namespace RAG.EventRegistrationTask.Migrations
 
                     b.OwnsOne("RAG.EventRegistrationTask.Events.ValueObjects.Location", "Location", b1 =>
                         {
-                            b1.Property<Guid>("EventId")
-                                .HasColumnType("TEXT");
+                            b1.Property<int>("EventId")
+                                .HasColumnType("INTEGER");
 
                             b1.Property<string>("City")
                                 .HasColumnType("TEXT")

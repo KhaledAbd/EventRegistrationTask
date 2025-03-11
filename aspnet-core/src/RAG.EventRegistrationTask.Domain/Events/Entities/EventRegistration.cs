@@ -7,16 +7,17 @@ namespace RAG.EventRegistrationTask.Events.Entities
     public class EventRegistration : Entity<Guid>
     {
         public Guid EventId { get; set; }
-        public Guid UserId { get; private set; }
-        public DateTime RegisteredAt { get; private set; }
-        public bool? IsCanceled { get; private set; } = false;
-        public virtual Event Event { get; private set; }
+        public Guid UserId { get;  set; }
+        public DateTime RegisteredAt { get;  set; }
+        public bool? IsCanceled { get;  set; }
+        public virtual Event Event { get;  set; }
 
-        private EventRegistration() { } // For EF Core
+        public EventRegistration() { } // For EF Core
 
-        internal EventRegistration(Guid userId, Guid EventId)
+        public EventRegistration(Guid userId, Guid eventId)
         {
             UserId = userId;
+            EventId = eventId;
             RegisteredAt = DateTime.UtcNow;
         }
 
@@ -26,6 +27,5 @@ namespace RAG.EventRegistrationTask.Events.Entities
         }
 
     }
-
 
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RAG.EventRegistrationTask.Configurations;
+using RAG.EventRegistrationTask.Events.Entities;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -54,6 +55,11 @@ public class EventRegistrationTaskDbContext :
 
     #endregion
 
+    #region event
+    public DbSet<Event> Events { get; set; }
+    public DbSet<EventRegistration> EventRegistrations { get; set; }
+
+    #endregion
     public EventRegistrationTaskDbContext(DbContextOptions<EventRegistrationTaskDbContext> options)
         : base(options)
     {

@@ -17,7 +17,9 @@ namespace RAG.EventRegistrationTask.Events
         public DateTime EndDate { get; set; }
         public Guid OrganizerId { get; set; }
         public string Link { get; set; }
-        public string Location { get; set; }
-
+        public string Government { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
     }
+
 }

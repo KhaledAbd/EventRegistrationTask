@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RAG.EventRegistrationTask.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -11,9 +12,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace RAG.EventRegistrationTask.Migrations
 {
     [DbContext(typeof(EventRegistrationTaskDbContext))]
-    partial class EventRegistrationTaskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250311200549_change_event_Edtity_Audit")]
+    partial class change_event_Edtity_Audit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +26,15 @@ namespace RAG.EventRegistrationTask.Migrations
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.Event", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ConcurrencyStamp");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("TEXT")
@@ -43,6 +54,11 @@ namespace RAG.EventRegistrationTask.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("ExtraProperties")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ExtraProperties");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
@@ -96,6 +112,7 @@ namespace RAG.EventRegistrationTask.Migrations
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.EventRegistration", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("EventId")
@@ -1913,7 +1930,7 @@ namespace RAG.EventRegistrationTask.Migrations
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.EventRegistration", b =>
                 {
                     b.HasOne("RAG.EventRegistrationTask.Events.Entities.Event", "Event")
-                        .WithMany("EventRegistrations")
+                        .WithMany("Registrations")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2065,7 +2082,7 @@ namespace RAG.EventRegistrationTask.Migrations
 
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.Event", b =>
                 {
-                    b.Navigation("EventRegistrations");
+                    b.Navigation("Registrations");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RAG.EventRegistrationTask.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -11,9 +12,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace RAG.EventRegistrationTask.Migrations
 {
     [DbContext(typeof(EventRegistrationTaskDbContext))]
-    partial class EventRegistrationTaskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250311203037_change_event_Edtity_Audit2")]
+    partial class change_event_Edtity_Audit2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,6 +26,7 @@ namespace RAG.EventRegistrationTask.Migrations
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.Event", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreationTime")
@@ -96,6 +100,7 @@ namespace RAG.EventRegistrationTask.Migrations
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.EventRegistration", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("EventId")

@@ -39,7 +39,7 @@ namespace RAG.EventRegistrationTask.Configurations
             builder.Property(e => e.IsActive)
             .IsRequired();
 
-            builder.HasMany(c => c.Registrations)
+            builder.HasMany(c => c.EventRegistrations)
            .WithOne(er => er.Event)
            .HasForeignKey(er => er.EventId)
            .IsRequired();
