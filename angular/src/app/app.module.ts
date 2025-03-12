@@ -29,8 +29,8 @@ import { ThemeBasicModule, provideThemeBasicConfig } from '@abp/ng.theme.basic';
     AppRoutingModule,
     CoreModule,
     ThemeSharedModule,
-    
-    
+
+
     InternetConnectionStatusComponent,
                 ThemeBasicModule,
   ],
@@ -48,7 +48,7 @@ import { ThemeBasicModule, provideThemeBasicConfig } from '@abp/ng.theme.basic';
     provideSettingManagementConfig(),
     provideAccountConfig(),
     provideIdentityConfig(),
-    provideTenantManagementConfig(),
+    // provideTenantManagementConfig(),
     provideFeatureManagementConfig(),
     provideThemeBasicConfig(),
   ],

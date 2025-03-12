@@ -6,14 +6,14 @@
         <strong>Demo1</strong> is successfully running!
       </h5>
     </div>
-    <h1>{{ '::Welcome' | abpLocalization }}</h1>
+    <h1>{{ 'Welcome' | abpLocalization }}</h1>
 
-    <p class="lead px-lg-5 mx-lg-5">{{ '::LongWelcomeMessage' | abpLocalization }}</p>
+    <p class="lead px-lg-5 mx-lg-5">{{ 'LongWelcomeMessage' | abpLocalization }}</p>
 
     @if(!hasLoggedIn){
     <a (click)="login()" class="px-4 btn btn-primary ms-1" role="button"><i class="fa fa-sign-in"
         aria-hidden="true"></i>
-      {{ 'AbpAccount::Login' | abpLocalization }}</a>
+      {{ 'AbpAccountLogin' | abpLocalization }}</a>
     }
   </div>
   <div class="card">

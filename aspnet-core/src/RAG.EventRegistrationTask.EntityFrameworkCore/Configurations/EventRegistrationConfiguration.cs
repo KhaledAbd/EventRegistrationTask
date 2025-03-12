@@ -16,7 +16,7 @@ namespace RAG.EventRegistrationTask.Configurations
             builder.ToTable("EventRegistrations");
 
             builder.Property(er => er.RegisteredAt).IsRequired();
-            builder.Property(er => er.IsCanceled).IsRequired(false);
+            builder.Property(er => er.IsCanceled).HasDefaultValue(false);
         }
     }
 }

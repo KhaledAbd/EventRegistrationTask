@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RAG.EventRegistrationTask.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -415,31 +415,6 @@ namespace RAG.EventRegistrationTask.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    NameEn = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    NameAr = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    Capacity = table.Column<int>(type: "INTEGER", nullable: true),
-                    IsOnline = table.Column<bool>(type: "INTEGER", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    OrganizerId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Link = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
-                    Government = table.Column<string>(type: "TEXT", nullable: true),
-                    City = table.Column<string>(type: "TEXT", nullable: true),
-                    Street = table.Column<string>(type: "TEXT", nullable: true),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    ExtraProperties = table.Column<string>(type: "TEXT", nullable: false),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OpenIddictApplications",
                 columns: table => new
                 {
@@ -735,22 +710,37 @@ namespace RAG.EventRegistrationTask.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventRegistrations",
+                name: "Events",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EventId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    RegisteredAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IsCanceled = table.Column<bool>(type: "INTEGER", nullable: true)
+                    NameEn = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    NameAr = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Capacity = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsOnline = table.Column<bool>(type: "INTEGER", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    OrganizerId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Link = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    Government = table.Column<string>(type: "TEXT", nullable: true),
+                    City = table.Column<string>(type: "TEXT", nullable: true),
+                    Street = table.Column<string>(type: "TEXT", nullable: true),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventRegistrations", x => x.Id);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventRegistrations_Events_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Events",
+                        name: "FK_Events_AbpUsers_OrganizerId",
+                        column: x => x.OrganizerId,
+                        principalTable: "AbpUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -799,6 +789,27 @@ namespace RAG.EventRegistrationTask.Migrations
                         name: "FK_AbpEntityPropertyChanges_AbpEntityChanges_EntityChangeId",
                         column: x => x.EntityChangeId,
                         principalTable: "AbpEntityChanges",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventRegistrations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    EventId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    RegisteredAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsCanceled = table.Column<bool>(type: "INTEGER", nullable: true, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventRegistrations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventRegistrations_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1062,6 +1073,11 @@ namespace RAG.EventRegistrationTask.Migrations
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Events_OrganizerId",
+                table: "Events",
+                column: "OrganizerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Events_StartDate_EndDate",
                 table: "Events",
                 columns: new[] { "StartDate", "EndDate" });
@@ -1194,9 +1210,6 @@ namespace RAG.EventRegistrationTask.Migrations
                 name: "AbpRoles");
 
             migrationBuilder.DropTable(
-                name: "AbpUsers");
-
-            migrationBuilder.DropTable(
                 name: "Events");
 
             migrationBuilder.DropTable(
@@ -1204,6 +1217,9 @@ namespace RAG.EventRegistrationTask.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "AbpUsers");
 
             migrationBuilder.DropTable(
                 name: "OpenIddictApplications");

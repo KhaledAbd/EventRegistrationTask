@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
-using Volo.Abp.Domain.Entities;
-using Volo.Abp;
 using RAG.EventRegistrationTask.Events.ValueObjects;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Identity;
 
 namespace RAG.EventRegistrationTask.Events.Entities
 {
@@ -21,6 +20,9 @@ namespace RAG.EventRegistrationTask.Events.Entities
         public bool IsActive { get;  set; }
 
         public virtual ICollection<EventRegistration> EventRegistrations { get; set; }
+
+        public virtual IdentityUser Organizer { get; set; }
+        public int RegistrationCount => EventRegistrations?.Count ?? 0;
 
         private Event() { }
         public Event(

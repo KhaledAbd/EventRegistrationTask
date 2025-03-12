@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddEventComponent } from './components/add-update-event/add-event.component';
+import { CreateUpdateEventComponent } from './components/add-update-event/create-update-event.component';
 import { AdminRoutes } from './admin.routing';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AddEventComponent,
-    AdminRoutes
-  ],
-  declarations: []
+  imports: [CommonModule, AdminRoutes],
+  declarations: [],
 })
-export class AdminModule { }
+export class AdminModule {}

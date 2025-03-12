@@ -904,10 +904,35 @@
                 },
                 {
                   "name": "GetListAsync",
-                  "parametersOnMethod": [],
+                  "parametersOnMethod": [
+                    {
+                      "name": "organizerName",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": true,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "skipCount",
+                      "typeAsString": "System.Int32, System.Private.CoreLib",
+                      "type": "System.Int32",
+                      "typeSimple": "number",
+                      "isOptional": true,
+                      "defaultValue": 0
+                    },
+                    {
+                      "name": "maxResultCount",
+                      "typeAsString": "System.Int32, System.Private.CoreLib",
+                      "type": "System.Int32",
+                      "typeSimple": "number",
+                      "isOptional": true,
+                      "defaultValue": 10
+                    }
+                  ],
                   "returnValue": {
-                    "type": "System.Collections.Generic.List<RAG.EventRegistrationTask.Events.EventDto>",
-                    "typeSimple": "[RAG.EventRegistrationTask.Events.EventDto]"
+                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventDto>"
                   }
                 },
                 {
@@ -1007,22 +1032,84 @@
                 "type": "RAG.EventRegistrationTask.Events.EventDto",
                 "typeSimple": "RAG.EventRegistrationTask.Events.EventDto"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventAppService"
             },
-            "GetListAsync": {
-              "uniqueName": "GetListAsync",
+            "GetListAsyncByOrganizerNameAndSkipCountAndMaxResultCount": {
+              "uniqueName": "GetListAsyncByOrganizerNameAndSkipCountAndMaxResultCount",
               "name": "GetListAsync",
               "httpMethod": "GET",
               "url": "api/app/event",
               "supportedVersions": [],
-              "parametersOnMethod": [],
-              "parameters": [],
+              "parametersOnMethod": [
+                {
+                  "name": "organizerName",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": true,
+                  "defaultValue": null
+                },
+                {
+                  "name": "skipCount",
+                  "typeAsString": "System.Int32, System.Private.CoreLib",
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": true,
+                  "defaultValue": 0
+                },
+                {
+                  "name": "maxResultCount",
+                  "typeAsString": "System.Int32, System.Private.CoreLib",
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": true,
+                  "defaultValue": 10
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "organizerName",
+                  "name": "organizerName",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "skipCount",
+                  "name": "skipCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "maxResultCount",
+                  "name": "maxResultCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
               "returnValue": {
-                "type": "System.Collections.Generic.List<RAG.EventRegistrationTask.Events.EventDto>",
-                "typeSimple": "[RAG.EventRegistrationTask.Events.EventDto]"
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventDto>"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventAppService"
             },
             "CreateAsyncByInput": {
@@ -1059,7 +1146,7 @@
                 "type": "RAG.EventRegistrationTask.Events.EventDto",
                 "typeSimple": "RAG.EventRegistrationTask.Events.EventDto"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventAppService"
             },
             "UpdateAsyncByIdAndInput": {
@@ -1116,7 +1203,7 @@
                 "type": "RAG.EventRegistrationTask.Events.EventDto",
                 "typeSimple": "RAG.EventRegistrationTask.Events.EventDto"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventAppService"
             },
             "DeleteAsyncById": {
@@ -1153,7 +1240,7 @@
                 "type": "System.Void",
                 "typeSimple": "System.Void"
               },
-              "allowAnonymous": null,
+              "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventAppService"
             }
           }
@@ -1335,6 +1422,47 @@
               },
               "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventRegistrationAppService"
+            }
+          }
+        },
+        "RAG.EventRegistrationTask.Organizer.OrganizerAppService": {
+          "controllerName": "Organizer",
+          "controllerGroupName": "Organizer",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "RAG.EventRegistrationTask.Organizer.OrganizerAppService",
+          "interfaces": [
+            {
+              "type": "RAG.EventRegistrationTask.Organizer.IOrganizerAppService",
+              "name": "IOrganizerAppService",
+              "methods": [
+                {
+                  "name": "GetListAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<RAG.EventRegistrationTask.Organizer.OrganizerDto>",
+                    "typeSimple": "[RAG.EventRegistrationTask.Organizer.OrganizerDto]"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "GetListAsync": {
+              "uniqueName": "GetListAsync",
+              "name": "GetListAsync",
+              "httpMethod": "GET",
+              "url": "api/app/organizer",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<RAG.EventRegistrationTask.Organizer.OrganizerDto>",
+                "typeSimple": "[RAG.EventRegistrationTask.Organizer.OrganizerDto]"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "RAG.EventRegistrationTask.Organizer.IOrganizerAppService"
             }
           }
         }
@@ -4250,6 +4378,66 @@
           "minimum": null,
           "maximum": null,
           "regex": null
+        },
+        {
+          "name": "RegistrationCount",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "OrganizerName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Government",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "City",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Street",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
         }
       ]
     },
@@ -4346,6 +4534,39 @@
         },
         {
           "name": "EventLocation",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "RAG.EventRegistrationTask.Organizer.OrganizerDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Id",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Name",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",

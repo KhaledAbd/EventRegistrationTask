@@ -25,6 +25,11 @@ export interface EventDto extends FullAuditedEntityDto<string> {
   link?: string;
   location?: string;
   isActive: boolean;
+  registrationCount: number;
+  organizerName?: string;
+  government?: string;
+  city?: string;
+  street?: string;
 }
 
 export interface EventRegistrationDto extends EntityDto<number> {

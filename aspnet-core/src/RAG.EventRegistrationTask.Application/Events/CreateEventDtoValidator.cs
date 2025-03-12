@@ -38,6 +38,10 @@ namespace RAG.EventRegistrationTask.Events
                 .When(x => x.IsOnline)
                 .WithMessage("Link is required for online events");
 
+            RuleFor(x => x.OrganizerId)
+                .NotNull()
+                .WithMessage("Organizer is Required");
+
             RuleFor(x => x.Street)
                 .NotEmpty()
                 .When(x => !x.IsOnline)

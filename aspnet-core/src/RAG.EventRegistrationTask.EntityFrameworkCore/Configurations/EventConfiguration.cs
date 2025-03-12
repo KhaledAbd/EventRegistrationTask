@@ -2,7 +2,6 @@
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RAG.EventRegistrationTask.Events.Entities;
-using System.Reflection.Emit;
 
 namespace RAG.EventRegistrationTask.Configurations
 {
@@ -43,6 +42,12 @@ namespace RAG.EventRegistrationTask.Configurations
            .WithOne(er => er.Event)
            .HasForeignKey(er => er.EventId)
            .IsRequired();
+
+            builder.HasOne(e => e.Organizer) // Define the relation
+             .WithMany()
+             .HasForeignKey(e => e.OrganizerId)
+             .IsRequired();
+
 
             builder.OwnsOne(e => e.Capacity, capacity =>
                  {

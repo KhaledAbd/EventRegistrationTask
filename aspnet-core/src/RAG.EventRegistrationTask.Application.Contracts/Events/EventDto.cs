@@ -19,6 +19,11 @@ namespace RAG.EventRegistrationTask.Events
         public string Link { get; set; }
         public string Location { get; set; }
         public bool IsActive { get; set; }
+        public int RegistrationCount { get; set; }
+        public string OrganizerName { get; set; }
+        public string Government { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
     }
 
 }

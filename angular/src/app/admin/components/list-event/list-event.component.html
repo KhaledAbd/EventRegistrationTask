@@ -1,51 +1,49 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-      <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">
-            {{ '::Event:EventList' | abpLocalization }}
-          </a></li>
-      </ol>
-  </nav>
-</div>
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h4> {{ '::Event:EventList' | abpLocalization }} </h4>
+  <h4> {{ 'Events::EventList' | abpLocalization }} </h4>
   <a [routerLink]="['/admin/add-event']" class="btn btn-primary d-flex align-items-center" >
       <i class="bi bi-plus-lg"></i>
       <span class="me-2">
-        {{ '::Event:EventAdd' | abpLocalization }}
+        {{ 'Events::EventAdd' | abpLocalization }}
          </span>
   </a>
 </div>
 
-<div *ngIf="events.length === 0">
+<div *ngIf="events && events.length === 0">
   <p>
-         {{ '::Event:NotAvailable' | abpLocalization }}
+         {{ 'Events::NotAvailable' | abpLocalization }}
   </p>
 </div>
 
-<table *ngIf="events.length > 0" class="table table-bordered">
+<table *ngIf="events && events.length > 0" class="table table-bordered">
   <thead>
     <tr>
-      <th>{{ '::Event:Name' | abpLocalization }}</th>
-      <th>{{ '::Event:Capacity' | abpLocalization }}</th>
-      <th>{{ '::Event:Status' | abpLocalization }}</th>
-      <th>{{ '::Event:StartDate' | abpLocalization }}</th>
-      <th>{{ '::Event:EndDate' | abpLocalization }}</th>
-      <th>{{ '::Event:Location' | abpLocalization }}</th>
-      <th>{{ '::Event:Link' | abpLocalization }}</th>
-      <th>{{ '::Event:UserName' | abpLocalization }}</th>
+      <th>{{ 'Events::Name' | abpLocalization }}</th>
+      <th>{{ 'Events::Capacity' | abpLocalization }}</th>
+      <th>{{ 'Events::IsOnline' | abpLocalization }}</th>
+      <th>{{ 'Events::StartDate' | abpLocalization }}</th>
+      <th>{{ 'Events::EndDate' | abpLocalization }}</th>
+      <th>{{ 'Events::Location' | abpLocalization }}</th>
+      <th>{{ 'Events::CountRegistration' | abpLocalization }}</th>
+      <th>{{ 'Events::Link' | abpLocalization }}</th>
+      <th>{{ 'Events::UserName' | abpLocalization }}</th>
+      <th>{{ 'Events::Remove' | abpLocalization }}</th>
+      <th>{{ 'Events::Edit' | abpLocalization }}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let event of events">
       <td>{{ event.nameEn || event.nameAr }}</td>
       <td>{{ event.capacity  }}</td>
-      <td>{{ event.isOnline ? '::Event:Online' : '::Event:Offline'  | abpLocalization}}</td>
-      <td>{{ event.startDate  }}</td>
-      <td>{{ event.endDate  }}</td>
-      <td>{{ event.government  }}, {{ event.city  }}, {{ event.street  }}</td>
-      <td><a  *ngIf="event.link" [href]="event.link" target="_blank">{{ '::Show' | abpLocalization }}</a></td>
-      <td *ngIf="event.organizerId">{{ event.organizerId }}</td>
+      <td>{{ (event.isOnline ? 'Events::Online' : 'Events::Offline' ) | abpLocalization}}</td>
+      <td>{{ event.startDate | date:'short' }}</td>
+      <td>{{ event.endDate | date:'short' }}</td>
+      <td>{{ event.location}}</td>
+      <td>{{ event.CountRegistration}}</td>
+      <td><a  *ngIf="event.link" [href]="event.link" target="_blank">{{ 'Show' | abpLocalization }}</a></td>
+      <td>{{ '@'+event.organizerName }}</td>
+      <td> <button (click)="remove(event.id)" class="btn btn-warning">{{ 'Events::Remove' | abpLocalization }}</button></td>
+      <td>
+        <button [routerLink]="'/admin/create-update-event/' + event.id" class="btn btn-secondary">{{ 'Events::Edit' | abpLocalization }}</button></td>
     </tr>
   </tbody>
 </table>

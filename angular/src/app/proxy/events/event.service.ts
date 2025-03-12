@@ -1,5 +1,6 @@
 import type { CreateUpdateEventDto, EventDto } from './models';
 import { RestService, Rest } from '@abp/ng.core';
+import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -34,10 +35,11 @@ export class EventService {
     { apiName: this.apiName,...config });
   
 
-  getList = (config?: Partial<Rest.Config>) =>
-    this.restService.request<any, EventDto[]>({
+  getList = (organizerName?: string, skipCount?: number, maxResultCount: number = 10, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PagedResultDto<EventDto>>({
       method: 'GET',
       url: '/api/app/event',
+      params: { organizerName, skipCount, maxResultCount },
     },
     { apiName: this.apiName,...config });
   

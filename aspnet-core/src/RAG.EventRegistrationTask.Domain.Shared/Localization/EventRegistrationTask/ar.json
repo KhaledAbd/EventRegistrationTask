@@ -33,6 +33,7 @@
     "Permission:Products:CreateEditProduct": "إنشاء/تعديل المنتج",
     "Permission:Products:DeleteProduct": "حذف المنتج",
     "Permission:Products:GetProduct": "الحصول على المنتج",
-    "Permission:Products:ListProduct": "عرض المنتجات"
+    "Permission:Products:ListProduct": "عرض المنتجات",
+    "Event:EventList ":  "قائمة الفاعليات"
   }
 }

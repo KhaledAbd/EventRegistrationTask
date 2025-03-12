@@ -88,6 +88,8 @@ namespace RAG.EventRegistrationTask.Migrations
 
                     b.HasIndex("IsActive");
 
+                    b.HasIndex("OrganizerId");
+
                     b.HasIndex("StartDate", "EndDate");
 
                     b.ToTable("Events", (string)null);
@@ -102,7 +104,9 @@ namespace RAG.EventRegistrationTask.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool?>("IsCanceled")
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime>("RegisteredAt")
                         .HasColumnType("TEXT");
@@ -1863,6 +1867,12 @@ namespace RAG.EventRegistrationTask.Migrations
 
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.Event", b =>
                 {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Organizer")
+                        .WithMany()
+                        .HasForeignKey("OrganizerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("RAG.EventRegistrationTask.Events.ValueObjects.Capacity", "Capacity", b1 =>
                         {
                             b1.Property<Guid>("EventId")
@@ -1908,6 +1918,8 @@ namespace RAG.EventRegistrationTask.Migrations
                     b.Navigation("Capacity");
 
                     b.Navigation("Location");
+
+                    b.Navigation("Organizer");
                 });
 
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.EventRegistration", b =>

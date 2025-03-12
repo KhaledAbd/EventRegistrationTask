@@ -12,8 +12,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace RAG.EventRegistrationTask.Migrations
 {
     [DbContext(typeof(EventRegistrationTaskDbContext))]
-    [Migration("20250311200549_change_event_Edtity_Audit")]
-    partial class change_event_Edtity_Audit
+    [Migration("20250312164743_InitMigration")]
+    partial class InitMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,15 +26,7 @@ namespace RAG.EventRegistrationTask.Migrations
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.Event", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("ConcurrencyStamp");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("TEXT")
@@ -54,11 +46,6 @@ namespace RAG.EventRegistrationTask.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");
-
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("ExtraProperties");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
@@ -104,6 +91,8 @@ namespace RAG.EventRegistrationTask.Migrations
 
                     b.HasIndex("IsActive");
 
+                    b.HasIndex("OrganizerId");
+
                     b.HasIndex("StartDate", "EndDate");
 
                     b.ToTable("Events", (string)null);
@@ -112,14 +101,15 @@ namespace RAG.EventRegistrationTask.Migrations
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.EventRegistration", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("EventId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool?>("IsCanceled")
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime>("RegisteredAt")
                         .HasColumnType("TEXT");
@@ -1880,6 +1870,12 @@ namespace RAG.EventRegistrationTask.Migrations
 
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.Event", b =>
                 {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "Organizer")
+                        .WithMany()
+                        .HasForeignKey("OrganizerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("RAG.EventRegistrationTask.Events.ValueObjects.Capacity", "Capacity", b1 =>
                         {
                             b1.Property<Guid>("EventId")
@@ -1925,12 +1921,14 @@ namespace RAG.EventRegistrationTask.Migrations
                     b.Navigation("Capacity");
 
                     b.Navigation("Location");
+
+                    b.Navigation("Organizer");
                 });
 
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.EventRegistration", b =>
                 {
                     b.HasOne("RAG.EventRegistrationTask.Events.Entities.Event", "Event")
-                        .WithMany("Registrations")
+                        .WithMany("EventRegistrations")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2082,7 +2080,7 @@ namespace RAG.EventRegistrationTask.Migrations
 
             modelBuilder.Entity("RAG.EventRegistrationTask.Events.Entities.Event", b =>
                 {
-                    b.Navigation("Registrations");
+                    b.Navigation("EventRegistrations");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

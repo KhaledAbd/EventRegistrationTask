@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Validation;
 
 namespace RAG.EventRegistrationTask.Base
 {
+    [Authorize]
     public class BaseApplicationService : ApplicationService
     {
         public BaseApplicationService()

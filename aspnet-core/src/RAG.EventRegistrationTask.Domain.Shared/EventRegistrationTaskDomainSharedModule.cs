@@ -47,12 +47,16 @@ public class EventRegistrationTaskDomainSharedModule : AbpModule
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddVirtualJson("/Localization/EventRegistrationTask");
 
-            options.DefaultResourceType = typeof(EventRegistrationTaskResource);
+            options.Resources
+               .Add<EventResource>(defaultCultureName: "en")
+               .AddBaseTypes(typeof(AbpValidationResource))
+               .AddVirtualJson("/Localization/Events");
+            options.DefaultResourceType = typeof(EventResource);
         });
 
         Configure<AbpExceptionLocalizationOptions>(options =>
         {
-            options.MapCodeNamespace("EventRegistrationTask", typeof(EventRegistrationTaskResource));
+            options.MapCodeNamespace("EventRegistrationTask.Events", typeof(EventResource));
         });
     }
 }

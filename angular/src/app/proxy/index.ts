@@ -1,2 +1,3 @@
 import * as Events from './events';
-export { Events };
+import * as Organizer from './organizer';
+export { Events, Organizer };
