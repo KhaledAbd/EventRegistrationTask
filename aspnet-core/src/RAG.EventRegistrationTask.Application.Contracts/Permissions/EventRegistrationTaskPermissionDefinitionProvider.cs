@@ -11,6 +11,12 @@ public class EventRegistrationTaskPermissionDefinitionProvider : PermissionDefin
         var myGroup = context.AddGroup(EventRegistrationTaskPermissions.GroupName);
         //Define your own permissions here. Example:
         //myGroup.AddPermission(EventRegistrationTaskPermissions.MyPermission1, L("Permission:MyPermission1"));
+
+        var productGroup = context.AddGroup(EventRegistrationTaskPermissions.ProductGroupName, L("EventRegistrationTask.Products"));
+        productGroup.AddPermission(EventRegistrationTaskPermissions.CreateEditEventPermission, L("Permission:Products:CreateEditProduct"));
+        productGroup.AddPermission(EventRegistrationTaskPermissions.DeleteEventPermission, L("Permission:Products:DeleteProduct"));
+        productGroup.AddPermission(EventRegistrationTaskPermissions.GetEventPermission, L("Permission:Products:GetProduct"));
+        productGroup.AddPermission(EventRegistrationTaskPermissions.ListEventPermission, L("Permission:Products:ListProduct"));
     }
 
     private static LocalizableString L(string name)

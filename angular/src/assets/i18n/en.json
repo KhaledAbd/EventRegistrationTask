@@ -1,0 +1,19 @@
+{
+  "EVENT": {
+    "NAME_EN": "Event Name (English)",
+    "NAME_EN_REQUIRED": "Event name (English) is required",
+    "NAME_EN_MAX": "Event name (English) cannot exceed 100 characters",
+    "NAME_AR": "Event Name (Arabic)",
+    "NAME_AR_REQUIRED": "Event name (Arabic) is required",
+    "NAME_AR_MAX": "Event name (Arabic) cannot exceed 100 characters",
+    "IS_ONLINE": "Is Online",
+    "LINK": "Link",
+    "LINK_REQUIRED": "Link is required for online events",
+    "CAPACITY": "Capacity",
+    "CAPACITY_MIN": "Capacity must be greater than zero",
+    "GOVERNMENT": "Government",
+    "CITY": "City",
+    "STREET": "Street",
+    "SUBMIT": "Create Event"
+  }
+}

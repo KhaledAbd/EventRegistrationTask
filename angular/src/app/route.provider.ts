@@ -15,6 +15,13 @@ function configureRoutes(routesService: RoutesService) {
         order: 1,
         layout: eLayoutType.application,
       },
+      {
+        path: 'admin/events',
+        name: '::Events',
+        iconClass: 'fas fa-list',
+        order: 2,
+        layout: eLayoutType.account,
+      },
     ]);
   };
 }

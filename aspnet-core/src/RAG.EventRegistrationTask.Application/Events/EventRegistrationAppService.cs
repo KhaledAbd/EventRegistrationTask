@@ -22,6 +22,7 @@ namespace RAG.EventRegistrationTask.Events
         {
             var registration = new EventRegistration(eventId, CurrentUser.Id!.Value);
             registration = await _eventRegistrationRepository.InsertAsync(registration);
+
             return ObjectMapper.Map<EventRegistration, EventRegistrationDto>(registration);
         }
 

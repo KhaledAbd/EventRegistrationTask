@@ -1,0 +1,136 @@
+<div class="container mt-4">
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <!-- Name (English) -->
+    <div class="mb-3">
+      <label class="form-label">{{ '::Event:NameEn' | abpLocalization }}</label>
+      <input type="text" class="form-control" formControlName="nameEn" [class.is-invalid]="eventForm.get('nameEn')?.invalid && eventForm.get('nameEn')?.touched">
+      <div *ngIf="eventForm.get('nameEn')?.errors?.required && eventForm.get('nameEn')?.touched" class="invalid-feedback">
+        {{ '::Event:NameEnRequired' | abpLocalization }}
+      </div>
+      <div *ngIf="eventForm.get('nameEn')?.errors?.maxlength && eventForm.get('nameEn')?.touched" class="invalid-feedback">
+        {{ '::Event:NameEnMax' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- Name (Arabic) -->
+    <div class="mb-3">
+      <label class="form-label">{{ '::Event:NameAr' | abpLocalization }}</label>
+      <input type="text" class="form-control" formControlName="nameAr" [class.is-invalid]="eventForm.get('nameAr')?.invalid && eventForm.get('nameAr')?.touched">
+      <div *ngIf="eventForm.get('nameAr')?.errors?.required && eventForm.get('nameAr')?.touched" class="invalid-feedback">
+        {{ '::Event:NameArRequired' | abpLocalization }}
+      </div>
+      <div *ngIf="eventForm.get('nameAr')?.errors?.maxlength && eventForm.get('nameAr')?.touched" class="invalid-feedback">
+        {{ '::Event:NameArMax' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- Is Online -->
+    <div class="form-check mb-3">
+      <input type="checkbox" class="form-check-input" formControlName="isOnline">
+      <label class="form-check-label">{{ '::Event:IsOnline' | abpLocalization }}</label>
+    </div>
+
+    <!-- Link -->
+    <div class="mb-3" *ngIf="isOnline">
+      <label class="form-label">{{ '::Event:Link' | abpLocalization }}</label>
+      <input type="text" class="form-control" formControlName="link" [class.is-invalid]="eventForm.get('link')?.invalid && eventForm.get('link')?.touched">
+      <div *ngIf="eventForm.get('link')?.errors?.required && eventForm.get('link')?.touched" class="invalid-feedback">
+        {{ '::Event:LinkRequired' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- Capacity -->
+    <div class="mb-3" *ngIf="!isOnline">
+      <label class="form-label">{{ '::Event:Capacity' | abpLocalization }}</label>
+      <input type="number" class="form-control" formControlName="capacity">
+      <div *ngIf="eventForm.get('capacity')?.errors?.min && eventForm.get('capacity')?.touched" class="invalid-feedback">
+        {{ '::Event:CapacityMin' | abpLocalization }}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="startDate" class="form-label">
+        {{ '::Event:StartDate' | abpLocalization }}
+        </label>
+      <input
+        id="startDate"
+        type="date"
+        class="form-control"
+        formControlName="startDate"
+        [class.is-invalid]="eventForm.get('startDate')?.invalid && eventForm.get('startDate')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="eventForm.get('startDate')?.hasError('startDateInvalid')">
+        {{ '::Event:StartDateInvalid' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- End Date -->
+    <div class="mb-3">
+      <label for="endDate" class="form-label">
+        {{ '::Event:EndDate' | abpLocalization }}
+      </label>
+      <input
+        id="endDate"
+        type="date"
+        class="form-control"
+        formControlName="endDate"
+        [class.is-invalid]="eventForm.get('endDate')?.invalid && eventForm.get('endDate')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="eventForm.get('endDate')?.hasError('endDateInvalid')">
+        {{ '::Event:EndDateInvalid' | abpLocalization }}
+
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="street" class="form-label">{{ '::Event:Street' | abpLocalization }}</label>
+      <input
+        id="street"
+        type="text"
+        class="form-control"
+        formControlName="street"
+        [class.is-invalid]="eventForm.get('street')?.invalid && eventForm.get('street')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="eventForm.get('street')?.hasError('streetInvalid')">
+        {{ '::Event:StreetRequired' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- Government -->
+    <div class="mb-3">
+      <label for="government" class="form-label">{{ '::Event:Government' | abpLocalization }}</label>
+      <select
+        id="government"
+        class="form-control"
+        formControlName="government"
+        [class.is-invalid]="eventForm.get('government')?.invalid && eventForm.get('government')?.touched"
+      >
+        <option value="">{{ '::Event:SelectGovernment' | abpLocalization }}</option>
+        <option *ngFor="let gov of governments" [value]="gov">{{ gov }}</option>
+      </select>
+      <div class="invalid-feedback" *ngIf="eventForm.get('government')?.hasError('required')">
+        {{ '::Event:GovernmentRequired' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- City -->
+    <div class="mb-3">
+      <label for="city" class="form-label">{{ '::Event:City' | abpLocalization }}</label>
+      <select
+        id="city"
+        class="form-control"
+        formControlName="city"
+        [class.is-invalid]="eventForm.get('city')?.invalid && eventForm.get('city')?.touched"
+      >
+        <option value="">{{ '::Event:SelectCity' | abpLocalization }}</option>
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+      <div class="invalid-feedback" *ngIf="eventForm.get('city')?.hasError('required')">
+        {{ '::Event:CityRequired' | abpLocalization }}
+      </div>
+    </div>
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">
+      {{ '::Event:Submit' | abpLocalization }}
+    </button>
+  </form>
+</div>
