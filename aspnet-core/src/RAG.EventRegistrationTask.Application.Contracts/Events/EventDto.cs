@@ -32,7 +32,7 @@ namespace RAG.EventRegistrationTask.Events
         public bool IsRegistered { get; set; }
 
         public Guid EventRegistrationId {get; set;}
-
+        public bool ShowRegisterAndCancel { get; set; }
     }
 
     public class EventActionDto

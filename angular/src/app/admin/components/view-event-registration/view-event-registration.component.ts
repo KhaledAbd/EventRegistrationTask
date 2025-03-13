@@ -1,4 +1,8 @@
-import { EventRegistrationDto, EventRegistrationService } from '@proxy/events';
+import {
+  ActionEventRegistration,
+  EventRegistrationDto,
+  EventRegistrationService,
+} from '@proxy/events';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -12,7 +16,7 @@ import { LocalizationModule } from '@abp/ng.core';
 })
 export class ViewEventRegistrationComponent {
   eventId: any;
-  registrations: EventRegistrationDto[];
+  registrations: ActionEventRegistration[];
   constructor(
     private eventRegistrationService: EventRegistrationService,
     private router: Router,

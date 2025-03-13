@@ -1523,8 +1523,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventRegistrationDto>",
-                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventRegistrationDto>"
+                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.ActionEventRegistration>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.ActionEventRegistration>"
                   }
                 }
               ]
@@ -1676,8 +1676,8 @@
                 }
               ],
               "returnValue": {
-                "type": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventRegistrationDto>",
-                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventRegistrationDto>"
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.ActionEventRegistration>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.ActionEventRegistration>"
               },
               "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventRegistrationAppService"
@@ -4370,6 +4370,39 @@
     }
   },
   "types": {
+    "RAG.EventRegistrationTask.Events.ActionEventRegistration": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "EventRegistration",
+          "jsonName": null,
+          "type": "RAG.EventRegistrationTask.Events.EventRegistrationDto",
+          "typeSimple": "RAG.EventRegistrationTask.Events.EventRegistrationDto",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "CanAddAction",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "RAG.EventRegistrationTask.Events.CreateUpdateEventDto": {
       "baseType": "Volo.Abp.Application.Dtos.EntityDto<System.Guid>",
       "isEnum": false,
@@ -4592,6 +4625,18 @@
           "jsonName": null,
           "type": "System.Guid",
           "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ShowRegisterAndCancel",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,

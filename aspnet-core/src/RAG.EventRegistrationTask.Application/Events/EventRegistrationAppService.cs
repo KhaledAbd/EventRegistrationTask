@@ -38,7 +38,7 @@ namespace RAG.EventRegistrationTask.Events
             }
 
 
-            EventRegistration registration = await _eventRegistrationRepository.GetAsync(eventId);
+            EventRegistration registration = (await _eventRegistrationRepository.GetQueryableAsync()).FirstOrDefault(c => c.EventId == eventId && c.UserId == CurrentUser.Id);
             if (registration is null || registration.IsCanceled!.Value)
             {
 

@@ -37,8 +37,7 @@
           <h5 class="card-title">{{ item.event.title }}</h5>
           <p class="card-text">{{ item.event.nameEn }}</p>
           <p>
-            <strong>{{ 'Events::Date' | abpLocalization }}:</strong>
-            {{ item.event.startDate | date:'fullDate' }}
+            <strong>{{ item.event.startDate | date:'short' }}</strong>
           </p>
           <p>
             <strong>{{ 'Events::Location' | abpLocalization }}:</strong>
@@ -46,14 +45,14 @@
           </p>
 
           <div class="d-flex justify-content-between mt-3">
-            <button
+            <button *ngIf="item.showRegisterAndCancel"
               class="btn btn-success"
               (click)="registerForEvent(item)"
               [disabled]="item.isRegistered">
               {{ item.isRegistered ? ('Events::Registered' | abpLocalization) : ('Events::Register' | abpLocalization) }}
             </button>
 
-            <button
+            <button *ngIf="item.showRegisterAndCancel"
               class="btn btn-danger"
               (click)="cancelRegistration(item)"
               [disabled]="!item.isRegistered">

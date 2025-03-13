@@ -113,7 +113,8 @@ namespace RAG.EventRegistrationTask.Events
                     {
                         Event = ObjectMapper.Map<Event, EventDto>(c),
                         IsRegistered = c.EventRegistrations.Any(c => c.UserId == CurrentUser.Id && !c.IsCanceled!.Value),
-                        EventRegistrationId = c.EventRegistrations.Where(c => c.UserId == CurrentUser.Id && !c.IsCanceled!.Value).Select(c => c.Id).SingleOrDefault()
+                        EventRegistrationId = c.EventRegistrations.Where(c => c.UserId == CurrentUser.Id && !c.IsCanceled!.Value).Select(c => c.Id).SingleOrDefault(),
+                        ShowRegisterAndCancel = c.StartDate >= DateTime.UtcNow.AddHours(1)
                     })
             );
             return new PagedResultDto<EventActiveDto>(

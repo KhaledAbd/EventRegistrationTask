@@ -1,5 +1,10 @@
 import type { EntityDto, FullAuditedEntityDto } from '@abp/ng.core';
 
+export interface ActionEventRegistration {
+  eventRegistration: EventRegistrationDto;
+  canAddAction: boolean;
+}
+
 export interface CreateUpdateEventDto extends EntityDto<string> {
   nameEn?: string;
   nameAr?: string;
@@ -24,6 +29,7 @@ export interface EventActiveDto {
   event: EventDto;
   isRegistered: boolean;
   eventRegistrationId?: string;
+  showRegisterAndCancel: boolean;
 }
 
 export interface EventDto extends FullAuditedEntityDto<string> {

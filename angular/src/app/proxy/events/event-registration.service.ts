@@ -1,4 +1,4 @@
-import type { EventRegistrationDto } from './models';
+import type { ActionEventRegistration } from './models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
@@ -19,7 +19,7 @@ export class EventRegistrationService {
   
 
   getRegistrationsEvent = (eventId: string, skipCount?: number, maxResultCount: number = 10, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, PagedResultDto<EventRegistrationDto>>({
+    this.restService.request<any, PagedResultDto<ActionEventRegistration>>({
       method: 'GET',
       url: `/api/app/event-registration/registrations-event/${eventId}`,
       params: { skipCount, maxResultCount },
