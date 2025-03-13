@@ -10,6 +10,7 @@ public static class EventRegistrationTaskPermissions
     public const string DeleteEventPermission = EventGroupName + ".Delete";
     public const string GetEventPermission = EventGroupName + ".Get";
     public const string ListEventPermission = EventGroupName + ".List";
+    public const string ActiveEventPermission = EventGroupName + ".Active";
     //Add your own permission names. Example:
     //public const string MyPermission1 = GroupName + ".MyPermission1";
 }

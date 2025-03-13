@@ -2,17 +2,24 @@ import { LocalizationModule, LocalizationService } from '@abp/ng.core';
 import { ToasterService } from '@abp/ng.theme.shared';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { EventActiveDto, EventRegistrationService, EventService } from '@proxy/events';
 
 @Component({
   selector: 'app-active-event-list',
-  imports: [CommonModule, LocalizationModule],
+  imports: [CommonModule, LocalizationModule, FormsModule],
   templateUrl: './active-event-list.component.html',
   styleUrl: './active-event-list.component.scss',
 })
 export class ActiveEventListComponent {
   events: EventActiveDto[] = [];
-
+  filter: {
+    organizerName: string;
+    eventName: string;
+  } = {
+    organizerName: '',
+    eventName: '',
+  };
   constructor(
     private eventRegistrationService: EventRegistrationService,
     private toaster: ToasterService,
@@ -23,9 +30,11 @@ export class ActiveEventListComponent {
   }
 
   getListActive() {
-    this.eventService.getActiveEvent().subscribe(c => {
-      this.events = c.items;
-    });
+    this.eventService
+      .getActiveEvent(this.filter.organizerName, this.filter.eventName)
+      .subscribe(c => {
+        this.events = c.items;
+      });
   }
 
   registerForEvent(event: EventActiveDto) {

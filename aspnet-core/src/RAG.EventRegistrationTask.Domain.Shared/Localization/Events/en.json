@@ -45,6 +45,10 @@
     "Events::Location": "Location",
     "Events::Registered": "Registered",
     "Events::Register": "Register",
-    "Events::Cancel": "Cancel"
+    "Events::Cancel": "Cancel",
+    "OrganizerName": "Organizer Name",
+    "OrganizerNamePlaceholder": "Enter organizer name",
+    "ShowOnlyMyEvents": "Show Only My Events",
+    "ApplyFilters": "Apply Filters"
   }
 }

@@ -34,4 +34,12 @@ namespace RAG.EventRegistrationTask.Events
         public Guid EventRegistrationId {get; set;}
 
     }
+
+    public class EventActionDto
+    {
+        public EventDto Event { get; set; }
+        public bool CanEdit { get; set; }
+        public bool HasActiveAction { get; set; }
+
+    }
 }

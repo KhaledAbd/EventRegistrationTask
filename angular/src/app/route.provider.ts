@@ -21,7 +21,14 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-list',
         order: 2,
         layout: eLayoutType.account,
-        requiredPolicy: 'EventRegistrationTask.Event.List'
+        requiredPolicy: 'EventRegistrationTask.Event.List',
+      },
+      {
+        path: 'user',
+        name: 'Events::Title',
+        iconClass: 'fas fa-home',
+        order: 1,
+        layout: eLayoutType.application,
       },
     ]);
   };

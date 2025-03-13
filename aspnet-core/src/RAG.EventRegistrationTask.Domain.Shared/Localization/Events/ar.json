@@ -45,6 +45,10 @@
     "Date": "التاريخ",
     "Registered": "مسجل",
     "Register": "تسجيل",
-    "Cancel": "إلغاء"
+    "Cancel": "إلغاء",
+    "OrganizerName": "اسم المنظم",
+    "OrganizerNamePlaceholder": "أدخل اسم المنظم",
+    "ShowOnlyMyEvents": "عرض الفعاليات الخاصة بي فقط",
+    "ApplyFilters": "تطبيق الفلاتر"
   }
 }
