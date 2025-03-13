@@ -15,4 +15,9 @@ public static class EventRegistrationTaskDomainErrorCodes
     public const string INVALID_EVENT_STREET = NAMESPACE + "InvalidStreet";
     public const string INVALID_EVENT_GOVERNMENT = NAMESPACE + "InvalidGovernment";
     public const string INVALID_EVENT_CITY = NAMESPACE + "InvalidCity";
+
+    public const string Event_NOT_FOUND = NAMESPACE + "Event_NOT_FOUND";
+    public const string Event_NOT_AVAILABLE_CAPACITY = NAMESPACE + "Event_NOT_AVAILABLE_CAPACITY";
+
+    public const string EVENT_EXECEED_PERIOD_CANCALATION = NAMESPACE + "Event_Execeed_Period_Cancaltion";
 }

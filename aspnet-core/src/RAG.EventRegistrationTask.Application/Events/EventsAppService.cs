@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ABPCourse.Demo1.Products;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using RAG.EventRegistrationTask.Base;
 using RAG.EventRegistrationTask.Events.Entities;
@@ -36,7 +37,7 @@ namespace RAG.EventRegistrationTask.Events
             if (eventEntity is null)
             {
                 // TODO:: I will add custom Exception InHirate from Bisness and Impelment NOTFOUND
-                throw new BusinessException("", "Not Found");
+                throw new EventNotFoundException(id);
             }
 
             return ObjectMapper.Map<Event, EventDto>(eventEntity);
