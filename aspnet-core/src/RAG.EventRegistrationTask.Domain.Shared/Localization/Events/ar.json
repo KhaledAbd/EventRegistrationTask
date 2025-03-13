@@ -82,6 +82,19 @@
     "InvalidOrganizer": "منظم الحدث مطلوب.",
     "InvalidStreet": "الشارع مطلوب للأحداث غير المتصلة بالإنترنت.",
     "InvalidGovernment": "الحكومة مطلوبة للأحداث غير المتصلة بالإنترنت.",
-    "InvalidCity": "المدينة مطلوبة للأحداث غير المتصلة بالإنترنت."
+    "InvalidCity": "المدينة مطلوبة للأحداث غير المتصلة بالإنترنت.",
+    "CountRegistration": "تعداد التسجيل",
+    "Remove": "إزالة",
+    "Edit": "تعديل",
+    "UnActive": "غير مفعل",
+    "ActiveSuccessfully": "تم تفعيل الفاعلية بنجاح.",
+    "UnActiveSuccessfully": "تم إلغاء تفعيل الفاعلية بنجاح.",
+    "EventRegistrationTask.Events": "الفاعليات",
+    "EventRegistrationTask.EventRegistrations": "التسجيل فى الفاعليات",
+       "Permission:Events:CreateEditEvent": "إنشاء/تعديل حدث",
+    "Permission:Events:DeleteEvent": "حذف حدث",
+    "Permission:Events:GetEvent": "عرض تفاصيل الحدث",
+    "Permission:Events:ListEvent": "عرض قائمة الأحداث"
+
   }
 }

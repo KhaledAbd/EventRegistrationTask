@@ -82,6 +82,18 @@
     "InvalidOrganizer": "The event organizer is required.",
     "InvalidStreet": "The street is required for offline events.",
     "InvalidGovernment": "The government is required for offline events.",
-    "InvalidCity": "The city is required for offline events."
+    "InvalidCity": "The city is required for offline events.",
+    "CountRegistration": "Count Registration",
+    "Remove": "Remove",
+    "Edit": "Edit",
+    "UnActive": "UnActive",
+    "ActiveSuccessfully": "The event has been activated successfully.",
+    "UnActiveSuccessfully": "The event has been deactivated successfully.",
+    "EventRegistrationTask.Events": "Events",
+    "EventRegistrationTask.EventRegistrations": "Event Registrations",
+    "Permission:Events:CreateEditEvent": "Create/Edit Event",
+    "Permission:Events:DeleteEvent": "Delete Event",
+    "Permission:Events:GetEvent": "View Event Details",
+    "Permission:Events:ListEvent": "List Events"
   }
 }

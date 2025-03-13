@@ -3,7 +3,7 @@ import { LocalizationModule, LocalizationService, PermissionService } from '@abp
 import { IdentityUserService } from '@abp/ng.identity/proxy';
 import { ToasterService } from '@abp/ng.theme.shared';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { EventActionDto, EventDto } from '@proxy/events';
@@ -14,13 +14,15 @@ import { EventActionDto, EventDto } from '@proxy/events';
   templateUrl: './list-event.component.html',
   styleUrl: './list-event.component.scss',
 })
-export class ListEventComponent {
+export class ListEventComponent implements OnInit {
   events: EventActionDto[];
 
   filter = {
     organizerName: '',
     retrieveOwnUser: false,
   };
+  canDelete: boolean;
+  canActive: boolean;
 
   constructor(
     private eventService: EventService,
@@ -28,9 +30,11 @@ export class ListEventComponent {
     private permissionService: PermissionService,
     private toastrService: ToasterService,
     private localization: LocalizationService
-  ) {
+  ) {}
+  ngOnInit(): void {
+    this.canDelete = this.permissionService.getGrantedPolicy('EventRegistrationTask.Event.Delete');
+    this.canActive = this.permissionService.getGrantedPolicy('EventRegistrationTask.Event.Active');
     this.getData();
-    const canDelete = this.permissionService.getGrantedPolicy('EventRegistrationTask.Event.Delete');
   }
 
   getData() {
@@ -43,14 +47,16 @@ export class ListEventComponent {
 
   remove(id: string) {
     this.eventService.delete(id).subscribe(() => {
-      this.toastrService.warn(this.localization.instant('RemoveSuccesFul'));
+      this.toastrService.warn(this.localization.instant('Events::RemoveSuccesFul'));
       this.router.navigateByUrl('/admin/events');
     });
   }
   active(event: EventDto) {
     this.eventService.active(event.id).subscribe(() => {
       this.toastrService.warn(
-        this.localization.instant(event.isActive ? 'UnActiveSuccessfully' : 'ActiveSuccessfully')
+        this.localization.instant(
+          event.isActive ? 'Events::UnActiveSuccessfully' : 'Events::ActiveSuccessfully'
+        )
       );
       this.getData();
       this.router.navigateByUrl('/admin/events');

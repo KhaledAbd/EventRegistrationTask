@@ -1,17 +1,14 @@
-﻿using ABPCourse.Demo1.Products;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using RAG.EventRegistrationTask.Base;
 using RAG.EventRegistrationTask.Events.Entities;
+using RAG.EventRegistrationTask.Events.Exceptions;
 using RAG.EventRegistrationTask.Permissions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.Validation;
 
 namespace RAG.EventRegistrationTask.Events
 {
@@ -26,8 +23,9 @@ namespace RAG.EventRegistrationTask.Events
             _eventRepository = eventRepository;
             _validator = validator;
         }
-        [Authorize(EventRegistrationTaskPermissions.GetEventPermission)]
 
+        #region Get
+        [Authorize(EventRegistrationTaskPermissions.GetEventPermission)]
         public async Task<EventDto> GetAsync(Guid id)
         {
             var eventEntity = (await _eventRepository
@@ -42,8 +40,6 @@ namespace RAG.EventRegistrationTask.Events
 
             return ObjectMapper.Map<Event, EventDto>(eventEntity);
         }
-
-        #region
         [Authorize(EventRegistrationTaskPermissions.ListEventPermission)]
         public async Task<PagedResultDto<EventActionDto>> GetListAsync(string? organizerName = null, bool ReteiveOwnUser = false, int skipCount = 0, int maxResultCount = 10)
         {
@@ -75,7 +71,7 @@ namespace RAG.EventRegistrationTask.Events
                             {
                                 Event = ObjectMapper.Map<Event, EventDto>(c),
                                 CanEdit = CurrentUser.Id == c.CreatorId,
-                                HasActiveAction = CurrentUser.Id == c.CreatorId && DateTime.Now.Date > c.StartDate.Date
+                                HasActiveAction = CurrentUser.Id == c.CreatorId && DateTime.Now.Date <= c.StartDate.Date
                             })
                     );
 
@@ -135,8 +131,9 @@ namespace RAG.EventRegistrationTask.Events
         }
 
         #endregion
-        [Authorize(EventRegistrationTaskPermissions.CreateEditEventPermission)]
 
+        #region UpdateADD
+        [Authorize(EventRegistrationTaskPermissions.CreateEditEventPermission)]
         public async Task<EventDto> CreateAsync(CreateUpdateEventDto input)
         {
             var validationResult = await _validator.ValidateAsync(input);
@@ -181,6 +178,6 @@ namespace RAG.EventRegistrationTask.Events
             eventEntity = await _eventRepository.UpdateAsync(eventEntity);
             return eventEntity != null && eventEntity.Id != Guid.Empty;
         }
-
+        #endregion
     }
 }

@@ -1,17 +1,14 @@
-﻿using ABPCourse.Demo1.Products;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Authorization;
 using RAG.EventRegistrationTask.Events.Entities;
-using RAG.EventRegistrationTask.Events.ValueObjects;
+using RAG.EventRegistrationTask.Events.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.ObjectMapping;
 
 namespace RAG.EventRegistrationTask.Events
 {
@@ -52,17 +49,36 @@ namespace RAG.EventRegistrationTask.Events
 
         public async Task<bool> CancelAsync(Guid id)
         {
-            var registration = await _eventRegistrationRepository.GetAsync(id);
-          
-            if (registration.UserId != CurrentUser.Id)
+            // Fetch the registration with event details
+            var registration = (await _eventRegistrationRepository.WithDetailsAsync(c => c.Event))
+                .AsQueryable()
+                .FirstOrDefault(c => c.Id == id);
+
+            if (registration == null)
             {
-                throw new UnauthorizedAccessException("You can only cancel your own registrations.");
+                throw new EventRegistrationNotFoundException(id);
             }
 
-            registration.IsCanceled = true;
-            registration = await _eventRegistrationRepository.UpdateAsync(registration);
-            return registration != null && registration.Id != Guid.Empty;
+            // Check if the current user is the owner of the registration
+            if (registration.UserId != CurrentUser.Id)
+            {
+                throw new UnauthorizedAccessException();
+            }
 
+            // Check if the event start date is within 1 hour from now
+            if (registration.Event.StartDate <= DateTime.UtcNow.AddHours(1))
+            {
+                throw new EventExeceedPeriodCancaltionException(registration.Event.StartDate);
+            }
+
+            // Mark the registration as canceled
+            registration.IsCanceled = true;
+
+            // Update the registration in the repository
+            registration = await _eventRegistrationRepository.UpdateAsync(registration);
+
+            // Return true if the update was successful
+            return registration != null && registration.Id != Guid.Empty;
         }
 
         public async Task<PagedResultDto<EventRegistrationDto>> GetRegistrationsEventAsync(Guid eventId,  int skipCount = 0, int maxResultCount = 10)

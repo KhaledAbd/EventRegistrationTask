@@ -2,7 +2,7 @@
 using System;
 using Volo.Abp;
 
-namespace ABPCourse.Demo1.Products
+namespace RAG.EventRegistrationTask.Events.Exceptions
 {
     public class EventNotFoundException: BusinessException
     {

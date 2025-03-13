@@ -69,8 +69,7 @@
       <td>{{ item.event.CountRegistration}}</td>
       <td><a *ngIf="item.event.link" [href]="item.event.link" target="_blank">{{ 'Show' | abpLocalization }}</a></td>
       <td>{{ '@'+item.event.organizerName }}</td>
-      <td> <button (click)="remove(item.event.id)" class="btn btn-warning">{{ 'Events::Remove' | abpLocalization
-          }}</button></td>
+      <td> <button (click)="remove(item.event.id)" class="btn btn-warning" *ngIf="canDelete && item.hasActiveAction">{{ 'Events::Remove' | abpLocalization }}</button></td>
       <td>
         <button [routerLink]="'/admin/create-update-event/' + item.event.id" class="btn btn-secondary"
           *ngIf="item.canEdit">{{ 'Events::Edit'

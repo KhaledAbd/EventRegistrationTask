@@ -20,4 +20,6 @@ public static class EventRegistrationTaskDomainErrorCodes
     public const string Event_NOT_AVAILABLE_CAPACITY = NAMESPACE + "Event_NOT_AVAILABLE_CAPACITY";
 
     public const string EVENT_EXECEED_PERIOD_CANCALATION = NAMESPACE + "Event_Execeed_Period_Cancaltion";
+
+    public const string? EVENT_REGISTRATION_NOT_FOUND = NAMESPACE + "Event_Registration_NOT_FOUND";
 }
