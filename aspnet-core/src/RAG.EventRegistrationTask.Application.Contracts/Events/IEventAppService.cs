@@ -11,6 +11,8 @@ namespace RAG.EventRegistrationTask.Events
         Task<EventDto> CreateAsync(CreateUpdateEventDto input);
         Task<EventDto> UpdateAsync(Guid id, CreateUpdateEventDto input);
         Task DeleteAsync(Guid id);
+        Task<PagedResultDto<EventActiveDto>> GetActiveEventAsync(string name = null, string organizerName = null, int skipCount = 0, int maxResultCount = 10);
+
     }
 
 }

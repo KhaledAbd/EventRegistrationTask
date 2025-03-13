@@ -3,26 +3,28 @@ using System;
 using RAG.EventRegistrationTask.Events.ValueObjects;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.Identity;
+using System.Linq;
 
 namespace RAG.EventRegistrationTask.Events.Entities
 {
-    public class Event: FullAuditedEntity<Guid>
+    public class Event : FullAuditedEntity<Guid>
     {
-        public string NameEn { get;  set; }
-        public string NameAr { get;  set; }
-        public Capacity Capacity { get;  set; }
-        public bool IsOnline { get;  set; }
-        public DateTime StartDate { get;  set; }
-        public DateTime EndDate { get;  set; }
-        public Guid OrganizerId { get;  set; }
-        public string Link { get;  set; }
-        public Location Location { get;  set; }  
-        public bool IsActive { get;  set; }
+        public string NameEn { get; set; }
+        public string NameAr { get; set; }
+        public Capacity Capacity { get; set; }
+        public bool IsOnline { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public Guid OrganizerId { get; set; }
+        public string Link { get; set; }
+        public Location Location { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual ICollection<EventRegistration> EventRegistrations { get; set; }
 
         public virtual IdentityUser Organizer { get; set; }
-        public int RegistrationCount => EventRegistrations?.Count ?? 0;
+
+        public int RegistrationCount => EventRegistrations is not null ? EventRegistrations.AsQueryable().Where(c => !c.IsCanceled.Value).Count(): 0;
 
         private Event() { }
         public Event(

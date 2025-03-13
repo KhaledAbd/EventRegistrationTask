@@ -32,8 +32,8 @@ namespace RAG.EventRegistrationTask.Events
             var eventEntity = (await _eventRepository
                          .WithDetailsAsync(c => c.Organizer))
                          .FirstOrDefault(c => c.Id == id);
-            
-            if(eventEntity is null)
+
+            if (eventEntity is null)
             {
                 // TODO:: I will add custom Exception InHirate from Bisness and Impelment NOTFOUND
                 throw new BusinessException("", "Not Found");
@@ -46,7 +46,7 @@ namespace RAG.EventRegistrationTask.Events
         public async Task<PagedResultDto<EventDto>> GetListAsync(string? organizerName = null, int skipCount = 0, int maxResultCount = 10)
         {
             var query = (await _eventRepository
-                .WithDetailsAsync(c => c.Organizer))
+            .WithDetailsAsync(c => c.Organizer, c => c.EventRegistrations))
                 .AsQueryable();
 
             // Filter by Organizer Name if provided
@@ -108,6 +108,55 @@ namespace RAG.EventRegistrationTask.Events
         public async Task DeleteAsync(Guid id)
         {
             await _eventRepository.DeleteAsync(id);
+        }
+
+        public async Task<PagedResultDto<EventActiveDto>> GetActiveEventAsync(string? name = null, string? organizerName = null, int skipCount = 0, int maxResultCount = 10)
+        {
+            var query = (await _eventRepository
+            .WithDetailsAsync(c => c.Organizer, c => c.EventRegistrations))
+            .Where(c => c.IsActive == true)
+            .AsQueryable();
+
+
+            // Filter by Organizer Name if provided
+            if (!string.IsNullOrWhiteSpace(organizerName))
+            {
+                query = query.Where(e => e.Organizer.Name.Contains(organizerName));
+            }
+            // Filter by Organizer Name if provided
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                query = query.Where(e => e.NameAr.Contains(name) || e.NameEn.Contains(name));
+            }
+
+            // Get the total count before applying paging
+            var totalCount = await AsyncExecuter.CountAsync(query);
+
+            // Apply Paging
+            var events = await AsyncExecuter.ToListAsync(
+                query
+                    .OrderBy(e => e.CreationTime) // Optional sorting
+                    .Skip(skipCount)
+                    .Take(maxResultCount)
+                    .Select(c => new EventActiveDto
+                    {
+                        Event = ObjectMapper.Map<Event, EventDto>(c),
+                        IsRegistered = c.EventRegistrations.Any(c => c.UserId == CurrentUser.Id && !c.IsCanceled!.Value),
+                        EventRegistrationId = c.EventRegistrations.Where(c => c.UserId == CurrentUser.Id && !c.IsCanceled!.Value).Select(c => c.Id).SingleOrDefault()
+                    })
+            );
+            return new PagedResultDto<EventActiveDto>(
+              totalCount,
+            events
+          );
+
+            // TODO:: Context Map NOt work
+            //  return new PagedResultDto<EventActiveDto>(
+            //    totalCount,
+            //    ObjectMapper.Map<List<Event>, List<EventActiveDto>>(events, opts =>
+            //        opts.Items["UserId"] = CurrentUser.Id)
+            //);
+
         }
     }
 }

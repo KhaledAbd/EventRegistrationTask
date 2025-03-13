@@ -14,6 +14,12 @@ export interface CreateUpdateEventDto extends EntityDto<string> {
   street?: string;
 }
 
+export interface EventActiveDto {
+  eventRegistrationId: string;
+  event: EventDto;
+  isRegistered: boolean;
+}
+
 export interface EventDto extends FullAuditedEntityDto<string> {
   nameEn?: string;
   nameAr?: string;

@@ -7,7 +7,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace RAG.EventRegistrationTask.Events
 {
-    public class EventDto: FullAuditedEntityDto<Guid>
+    public class EventDto : FullAuditedEntityDto<Guid>
     {
         public string NameEn { get; set; }
         public string NameAr { get; set; }
@@ -26,4 +26,12 @@ namespace RAG.EventRegistrationTask.Events
         public string Street { get; set; }
     }
 
+    public class EventActiveDto
+    {
+        public EventDto Event { get; set; }
+        public bool IsRegistered { get; set; }
+
+        public Guid EventRegistrationId {get; set;}
+
+    }
 }

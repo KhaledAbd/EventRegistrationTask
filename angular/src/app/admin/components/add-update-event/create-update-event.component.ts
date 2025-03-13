@@ -37,7 +37,6 @@ export class CreateUpdateEventComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    debugger;
     this.eventForm = this.fb.group({
       id: [null],
       nameEn: ['', [Validators.required, Validators.maxLength(100)]],
@@ -115,6 +114,10 @@ export class CreateUpdateEventComponent implements OnInit {
   onSubmit() {
     if (this.eventForm.valid) {
       const data = this.eventForm.value;
+
+      // Convert to UTC with timezone
+      data.startDate = new Date(data.startDate).toISOString();
+      data.endDate = new Date(data.endDate).toISOString();
 
       if (this.isEditMode) {
         // Update existing event

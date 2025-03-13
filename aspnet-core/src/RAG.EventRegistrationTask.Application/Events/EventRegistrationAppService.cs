@@ -18,22 +18,29 @@ namespace RAG.EventRegistrationTask.Events
             _eventRegistrationRepository = eventRegistrationRepository;
         }
 
-        public async Task<EventRegistrationDto> RegisterAsync(Guid eventId)
+        public async Task<bool> RegisterAsync(Guid eventId)
         {
-            var registration = new EventRegistration(eventId, CurrentUser.Id!.Value);
+            var registration = new EventRegistration(CurrentUser.Id!.Value, eventId);
+
+            // Insert the registration and wait for the result
             registration = await _eventRegistrationRepository.InsertAsync(registration);
 
-            return ObjectMapper.Map<EventRegistration, EventRegistrationDto>(registration);
+            // Return true if registration was successful, else false
+            return registration != null && registration.Id != Guid.Empty;
         }
 
-        public async Task CancelAsync(Guid id)
+
+        public async Task<bool> CancelAsync(Guid id)
         {
             var registration = await _eventRegistrationRepository.GetAsync(id);
             if (registration.UserId != CurrentUser.Id)
             {
                 throw new UnauthorizedAccessException("You can only cancel your own registrations.");
             }
-            await _eventRegistrationRepository.DeleteAsync(id);
+            registration.IsCanceled = true;
+            registration = await _eventRegistrationRepository.UpdateAsync(registration);
+            return registration != null && registration.Id != Guid.Empty;
+
         }
 
         public async Task<List<EventRegistrationDto>> GetRegistrationsForEventAsync(Guid eventId)

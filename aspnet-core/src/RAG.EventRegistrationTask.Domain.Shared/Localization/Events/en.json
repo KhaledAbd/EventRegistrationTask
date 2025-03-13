@@ -39,6 +39,12 @@
     "Online": "Online",
     "OnSite": "On Site",
     "Show": "Show",
-    "EventTitle": "Event"
+    "EventTitle": "Event",
+    "Events::Title": "Upcoming Events",
+    "Events::Date": "Date",
+    "Events::Location": "Location",
+    "Events::Registered": "Registered",
+    "Events::Register": "Register",
+    "Events::Cancel": "Cancel"
   }
 }

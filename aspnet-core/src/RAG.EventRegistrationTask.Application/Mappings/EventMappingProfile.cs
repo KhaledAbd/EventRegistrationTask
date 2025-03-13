@@ -17,15 +17,19 @@ namespace RAG.EventRegistrationTask.Mappings
 
 
             CreateMap<Event, EventDto>()
-                //, { dest.Location.City}, { dest.Location.Street}
-            //"
                 .ForMember(c => c.Government, opt => opt.MapFrom(dest => dest.Location.Government))
                 .ForMember(c => c.City, opt => opt.MapFrom(dest => dest.Location.City))
-                .ForMember(c => c.Street, opt => opt.MapFrom(dest => dest.Location.Government))
-            // impilicit convert to string is not work must be by customResolver in Automapper.
+                .ForMember(c => c.Street, opt => opt.MapFrom(dest => dest.Location.Street)) // Fixed here
                 .ForMember(c => c.Location, opt => opt.MapFrom(dest => $"{dest.Location.Government}, {dest.Location.City}, {dest.Location.Street}"))
                 .ForMember(c => c.Capacity, opt => opt.MapFrom(dest => dest.Capacity.Value))
                 .ForMember(c => c.OrganizerName, opt => opt.MapFrom(dest => dest.Organizer != null ? dest.Organizer.UserName : ""));
+
+
+            /// can use if ABP Impelemtent Mapper Context
+            //CreateMap<Event, EventActiveDto>()
+            //    .ForMember(c => c.IsRegistered, opt => opt.MapFrom((dest, _, _, context) =>
+            //        dest.EventRegistrations.Any(c => c.UserId.Equals(context.Items["UserId"]))));
+
 
             CreateMap<CreateUpdateEventDto, Event>()
                 .ForMember(c => c.Location, opt => opt.MapFrom(dest => new Location(dest.Government, dest.City, dest.Street)))
@@ -40,6 +44,7 @@ namespace RAG.EventRegistrationTask.Mappings
                 .ForMember(c => c.EventLocation, dest => dest.MapFrom(c => c.Event.Location));
 
             CreateMap<CreateUpdateEventRegistrationDto, EventRegistration>();
+            CreateMap<EventRegistration, EventRegistrationDto>();
         }
     }
 }

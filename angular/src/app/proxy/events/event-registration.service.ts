@@ -10,7 +10,7 @@ export class EventRegistrationService {
   
 
   cancel = (id: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
+    this.restService.request<any, boolean>({
       method: 'POST',
       url: `/api/app/event-registration/${id}/cancel`,
     },
@@ -26,7 +26,7 @@ export class EventRegistrationService {
   
 
   register = (eventId: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, EventRegistrationDto>({
+    this.restService.request<any, boolean>({
       method: 'POST',
       url: `/api/app/event-registration/register/${eventId}`,
     },

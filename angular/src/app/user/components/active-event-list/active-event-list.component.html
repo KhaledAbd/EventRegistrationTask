@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">{{ 'Events::Title' | abpLocalization }}</h2>
+
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let item of events">
+      <div class="card shadow-lg">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.event.title }}</h5>
+          <p class="card-text">{{ item.event.nameEn }}</p>
+          <p>
+            <strong>{{ 'Events::Date' | abpLocalization }}:</strong>
+            {{ item.event.startDate | date:'fullDate' }}
+          </p>
+          <p>
+            <strong>{{ 'Events::Location' | abpLocalization }}:</strong>
+            {{ item.event.location }}
+          </p>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button
+              class="btn btn-success"
+              (click)="registerForEvent(item)"
+              [disabled]="item.isRegistered">
+              {{ item.isRegistered ? ('Events::Registered' | abpLocalization) : ('Events::Register' | abpLocalization) }}
+            </button>
+
+            <button
+              class="btn btn-danger"
+              (click)="cancelRegistration(item)"
+              [disabled]="!item.isRegistered">
+              {{ 'Events::Cancel' | abpLocalization }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

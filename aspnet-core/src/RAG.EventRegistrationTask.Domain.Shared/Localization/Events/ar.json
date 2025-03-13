@@ -40,6 +40,11 @@
     "Online": "عبر الإنترنت",
     "OnSite": "غير متصل",
     "Show": "عرض",
-    "EventTitle":  "الفاعليات"
+    "EventTitle": "الفاعليات",
+    "Title": "الفعاليات القادمة",
+    "Date": "التاريخ",
+    "Registered": "مسجل",
+    "Register": "تسجيل",
+    "Cancel": "إلغاء"
   }
 }
