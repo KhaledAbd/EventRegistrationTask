@@ -38,7 +38,6 @@ export class CreateUpdateEventComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventForm = this.fb.group({
-      id: [null],
       nameEn: ['', [Validators.required, Validators.maxLength(100)]],
       nameAr: ['', [Validators.required, Validators.maxLength(100)]],
       capacity: [null, [Validators.min(1)]],
@@ -121,6 +120,7 @@ export class CreateUpdateEventComponent implements OnInit {
 
       if (this.isEditMode) {
         // Update existing event
+        data.id = this.eventId;
         this.eventService.update(this.eventId, data).subscribe(() => {
           this.router.navigateByUrl('/admin/events'); // Redirect to events list
           this.toaster.success(this.localization.instant('Events::Success'));

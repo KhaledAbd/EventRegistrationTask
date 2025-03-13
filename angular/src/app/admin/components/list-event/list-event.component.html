@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h4> {{ 'Events::EventList' | abpLocalization }} </h4>
-  <a [routerLink]="['/admin/add-event']" class="btn btn-primary d-flex align-items-center">
+  <a [routerLink]="['/admin/create-update-event']" class="btn btn-primary d-flex align-items-center">
     <i class="bi bi-plus-lg"></i>
     <span class="me-2">
       {{ 'Events::EventAdd' | abpLocalization }}
@@ -76,7 +76,7 @@
           *ngIf="item.canEdit">{{ 'Events::Edit'
           | abpLocalization }}</button>
       </td>
-      <td> <button (click)="active(item.event.id)" class="btn btn-warning" *ngIf="item.hasActiveAction">{{
+      <td> <button (click)="active(item.event)" class="btn btn-warning" *ngIf="item.hasActiveAction">{{
           (item.event.isActive ? 'Events::UnActive' : 'Events::Active' ) | abpLocalization
           }}</button></td>
       <td>

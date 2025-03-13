@@ -47,4 +47,13 @@ export class ListEventComponent {
       this.router.navigateByUrl('/admin/events');
     });
   }
+  active(event: EventDto) {
+    this.eventService.active(event.id).subscribe(() => {
+      this.toastrService.warn(
+        this.localization.instant(event.isActive ? 'UnActiveSuccessfully' : 'ActiveSuccessfully')
+      );
+      this.getData();
+      this.router.navigateByUrl('/admin/events');
+    });
+  }
 }

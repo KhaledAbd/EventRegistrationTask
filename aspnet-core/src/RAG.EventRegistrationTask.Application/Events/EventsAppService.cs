@@ -88,7 +88,7 @@ namespace RAG.EventRegistrationTask.Events
         {
             var query = (await _eventRepository
             .WithDetailsAsync(c => c.Organizer, c => c.EventRegistrations))
-            .Where(c => c.IsActive == true)
+            .Where(c => c.IsActive == true || c.EventRegistrations.Any(d => d.UserId == CurrentUser.Id && !d.IsCanceled!.Value))
             .AsQueryable();
 
 

@@ -49,7 +49,7 @@
       <!-- Capacity -->
       <div class="col-6 mb-3" *ngIf="!isOnline">
         <label class="form-label">{{ 'Events::Capacity' | abpLocalization }}</label>
-        <input type="number" class="form-control" formControlName="capacity">
+        <input type="number" class="form-control" formControlName="capacity" [class.is-invalid]="eventForm.get('capacity')?.invalid && eventForm.get('capacity')?.touched">
         <div *ngIf="eventForm.get('capacity')?.errors?.min && eventForm.get('capacity')?.touched" class="invalid-feedback">
           {{ 'Events::CapacityMin' | abpLocalization }}
         </div>
