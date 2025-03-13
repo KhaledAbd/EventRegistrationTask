@@ -19,4 +19,11 @@ namespace RAG.EventRegistrationTask.Events
         public string Email { get; set; }
         public string UserName { get; set; }
     }
+
+    public class ActionEventRegistration
+    {
+        public EventRegistrationDto EventRegistration { get; set; }
+
+        public bool CanAddAction { get; set; }
+    }
 }

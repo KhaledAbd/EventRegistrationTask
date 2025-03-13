@@ -7,6 +7,6 @@ public interface IEventRegistrationAppService
 {
     Task<bool> RegisterAsync(Guid eventId);
     Task<bool> CancelAsync(Guid id);
-    Task<PagedResultDto<EventRegistrationDto>> GetRegistrationsEventAsync(Guid eventId,int skipCount = 0, int maxResultCount = 10);
+    Task<PagedResultDto<ActionEventRegistration>> GetRegistrationsEventAsync(Guid eventId, int skipCount = 0, int maxResultCount = 10);
 
 }

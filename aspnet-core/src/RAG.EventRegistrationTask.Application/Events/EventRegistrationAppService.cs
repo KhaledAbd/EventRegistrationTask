@@ -27,22 +27,34 @@ namespace RAG.EventRegistrationTask.Events
         public async Task<bool> RegisterAsync(Guid eventId)
         {
             var eventEntity = await _eventRepository.FindAsync(c => c.Id == eventId);
-            if(eventEntity is null)
+            if (eventEntity is null)
             {
                 throw new EventNotFoundException(eventId);
             }
 
-            if(eventEntity.Capacity.Value < eventEntity.RegistrationCount)
+            if (eventEntity.Capacity.Value < eventEntity.RegistrationCount)
             {
                 throw new EventCapacityException(eventEntity.Capacity.Value ?? 0);
             }
 
-            var registration = new EventRegistration(CurrentUser.Id!.Value, eventId);
 
-            // Insert the registration and wait for the result
-            registration = await _eventRegistrationRepository.InsertAsync(registration);
+            EventRegistration registration = await _eventRegistrationRepository.GetAsync(eventId);
+            if (registration is null || registration.IsCanceled!.Value)
+            {
 
-            // Return true if registration was successful, else false
+                registration = new EventRegistration(CurrentUser.Id!.Value, eventId);
+
+                // Insert the registration and wait for the result
+                registration = await _eventRegistrationRepository.InsertAsync(registration);
+
+                // Return true if registration was successful, else false
+                return registration != null && registration.Id != Guid.Empty;
+            }
+            else
+            {
+                registration.IsCanceled = false;
+            }
+
             return registration != null && registration.Id != Guid.Empty;
         }
 
@@ -81,7 +93,7 @@ namespace RAG.EventRegistrationTask.Events
             return registration != null && registration.Id != Guid.Empty;
         }
 
-        public async Task<PagedResultDto<EventRegistrationDto>> GetRegistrationsEventAsync(Guid eventId,  int skipCount = 0, int maxResultCount = 10)
+        public async Task<PagedResultDto<ActionEventRegistration>> GetRegistrationsEventAsync(Guid eventId,  int skipCount = 0, int maxResultCount = 10)
         {
             var query = (await _eventRegistrationRepository
                 .WithDetailsAsync(r => r.User, cc => cc.Event))
@@ -96,11 +108,16 @@ namespace RAG.EventRegistrationTask.Events
                 query
                     .Skip(skipCount)
                     .Take(maxResultCount)
+                    .Select(co => new ActionEventRegistration()
+                    {
+                        EventRegistration = ObjectMapper.Map<EventRegistration, EventRegistrationDto>(co),
+                        CanAddAction = co.Event.StartDate <= DateTime.UtcNow.AddHours(1)
+                    })
             );
 
-            return new PagedResultDto<EventRegistrationDto>(
+            return new PagedResultDto<ActionEventRegistration>(
                 totalCount,
-                ObjectMapper.Map<List<EventRegistration>, List<EventRegistrationDto>>(registrations)
+                registrations
             );
         }
     }

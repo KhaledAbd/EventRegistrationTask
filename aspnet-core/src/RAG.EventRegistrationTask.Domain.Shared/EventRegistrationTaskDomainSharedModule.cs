@@ -51,7 +51,7 @@ public class EventRegistrationTaskDomainSharedModule : AbpModule
                .Add<EventResource>(defaultCultureName: "en")
                .AddBaseTypes(typeof(AbpValidationResource))
                .AddVirtualJson("/Localization/Events");
-            options.DefaultResourceType = typeof(EventResource);
+            options.DefaultResourceType = typeof(EventRegistrationTaskResource);
         });
 
         Configure<AbpExceptionLocalizationOptions>(options =>

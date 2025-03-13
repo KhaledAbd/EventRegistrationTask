@@ -48,6 +48,7 @@ export class ListEventComponent implements OnInit {
   remove(id: string) {
     this.eventService.delete(id).subscribe(() => {
       this.toastrService.warn(this.localization.instant('Events::RemoveSuccesFul'));
+      this.getData();
       this.router.navigateByUrl('/admin/events');
     });
   }

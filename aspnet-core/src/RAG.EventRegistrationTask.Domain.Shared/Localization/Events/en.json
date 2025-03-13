@@ -94,6 +94,10 @@
     "Permission:Events:CreateEditEvent": "Create/Edit Event",
     "Permission:Events:DeleteEvent": "Delete Event",
     "Permission:Events:GetEvent": "View Event Details",
-    "Permission:Events:ListEvent": "List Events"
+    "Permission:Events:ListEvent": "List Events",
+    "Event_NOT_FOUND": "Event not found",
+    "Event_NOT_AVAILABLE_CAPACITY": "Event not available due to capacity",
+    "EVENT_EXECEED_PERIOD_CANCALATION": "Event exceeds cancellation period",
+    "EVENT_REGISTRATION_NOT_FOUND": "Event registration not found"
   }
 }

@@ -50,10 +50,13 @@ export class ActiveEventListComponent {
   cancelRegistration(event: EventActiveDto) {
     if (event.isRegistered) {
       event.isRegistered = false;
-      this.eventRegistrationService.cancel(event.eventRegistrationId).subscribe(c => {
-        this.toaster.success(this.localization.instant('Events::CancelRegisterDone'));
-        this.getListActive();
-      });
+      this.eventRegistrationService.cancel(event.eventRegistrationId).subscribe(
+        c => {
+          this.toaster.success(this.localization.instant('Events::CancelRegisterDone'));
+        },
+        e => console.log(e),
+        () => this.getListActive()
+      );
     }
   }
 }
