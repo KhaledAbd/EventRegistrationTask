@@ -44,7 +44,7 @@ export interface EventDto extends FullAuditedEntityDto<string> {
   street?: string;
 }
 
-export interface EventRegistrationDto extends EntityDto<number> {
+export interface EventRegistrationDto extends EntityDto<string> {
   eventId?: string;
   userId?: string;
   registeredAt?: string;
@@ -52,5 +52,6 @@ export interface EventRegistrationDto extends EntityDto<number> {
   eventNameEn?: string;
   eventNameAr?: string;
   eventLink?: string;
-  eventLocation?: string;
+  email?: string;
+  userName?: string;
 }

@@ -129,7 +129,7 @@ export class CreateUpdateEventComponent implements OnInit {
         // Create new event
         this.eventService.create(data).subscribe(() => {
           this.router.navigateByUrl('/admin/events'); // Redirect to events list
-          this.toaster.success(this.localization.instant('Events::Success'));
+          this.toaster.success(this.localization.instant('Events::AddSuccess'));
         });
       }
     } else {

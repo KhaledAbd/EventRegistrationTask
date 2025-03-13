@@ -17,6 +17,10 @@ public class EventRegistrationTaskPermissionDefinitionProvider : PermissionDefin
         EventGroup.AddPermission(EventRegistrationTaskPermissions.DeleteEventPermission, L("Permission:Events:DeleteEvent"));
         EventGroup.AddPermission(EventRegistrationTaskPermissions.GetEventPermission, L("Permission:Events:GetEvent"));
         EventGroup.AddPermission(EventRegistrationTaskPermissions.ListEventPermission, L("Permission:Events:ListEvent"));
+        EventGroup.AddPermission(EventRegistrationTaskPermissions.ActiveEventPermission, L("Permission:Events:Active"));
+
+        var EventRegistrations = context.AddGroup(EventRegistrationTaskPermissions.EventRegistratioGroupName, L("EventRegistrationTask.EventRegistrations"));
+        EventRegistrations.AddPermission(EventRegistrationTaskPermissions.EventRegistrationView, L("Permission:EventRegistrations:EventRegistrationView"));
     }
 
     private static LocalizableString L(string name)

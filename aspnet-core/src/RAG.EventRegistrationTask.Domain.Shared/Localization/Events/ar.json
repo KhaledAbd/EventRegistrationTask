@@ -30,6 +30,8 @@
     "Permission:Products:DeleteProduct": "حذف المنتج",
     "Permission:Products:GetProduct": "الحصول على المنتج",
     "Permission:Products:ListProduct": "عرض المنتجات",
+    "Permission:Events:Active": "إلغاء التفعيل/تفعيل",
+    "Permission:EventRegistrations:EventRegistrationView": "عرض المسجلين",
     "EventList ": "قائمة الفاعليات",
     "Name": "الإسم",
     "EventList": "قائمة الأحداث",
@@ -49,6 +51,21 @@
     "OrganizerName": "اسم المنظم",
     "OrganizerNamePlaceholder": "أدخل اسم المنظم",
     "ShowOnlyMyEvents": "عرض الفعاليات الخاصة بي فقط",
-    "ApplyFilters": "تطبيق الفلاتر"
+    "ApplyFilters": "بحث ",
+    "EventRegistrationTitle": "تسجيلات الحدث",
+    "EventNameEn": "اسم الحدث (EN)",
+    "EventNameAr": "اسم الحدث (AR)",
+    "RegisteredAt": "تاريخ التسجيل",
+    "Canceled": "مُلغى",
+    "Active": "نشط",
+    "LoadMore": "تحميل المزيد",
+    "Email": "البريد الإلكتروني",
+    "AddSuccess": "تمت الإضافة بنجاح",
+    "EditSuccess": "تم التعديل بنجاح",
+    "Success": "نجاح",
+    "AddRegisterDone": "تم إضافة التسجيل بنجاح",
+    "CancelRegisterDone": "تم إلغاء التسجيل بنجاح",
+    "RemoveSuccesFul": "تم الحذف بنجاح"
+
   }
 }

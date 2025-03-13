@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RAG.EventRegistrationTask.Mappings
 {
-    public class EventMappingProfile: Profile
+    public class EventMappingProfile : Profile
     {
         public EventMappingProfile()
         {
@@ -37,11 +37,12 @@ namespace RAG.EventRegistrationTask.Mappings
                 .ForMember(c => c.EndDate, opt => opt.MapFrom(dest => DateTime.SpecifyKind(dest.EndDate, DateTimeKind.Utc)));
 
 
-            CreateMap<EventRegistration,EventRegistrationDto>()
+            CreateMap<EventRegistration, EventRegistrationDto>()
                 .ForMember(c => c.EventNameAr, dest => dest.MapFrom(c => c.Event.NameAr))
                 .ForMember(c => c.EventNameEn, dest => dest.MapFrom(c => c.Event.NameEn))
                 .ForMember(c => c.EventLink, dest => dest.MapFrom(c => c.Event.Link))
-                .ForMember(c => c.EventLocation, dest => dest.MapFrom(c => c.Event.Location));
+                .ForMember(c => c.UserName, dest => dest.MapFrom(c => c.User != null ? c.User.Name : ""))
+                .ForMember(c => c.Email, opt => opt.MapFrom(c=> c.User != null ? c.User.Email : ""));
 
             CreateMap<CreateUpdateEventRegistrationDto, EventRegistration>();
             CreateMap<EventRegistration, EventRegistrationDto>();

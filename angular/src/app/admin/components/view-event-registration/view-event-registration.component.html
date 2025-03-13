@@ -1,0 +1,26 @@
+<!-- event-registration.component.html -->
+<div class="container mt-4">
+  <h3>{{ 'Events::EventRegistrationTitle' | abpLocalization }}</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{ 'Events::UserName' | abpLocalization }}</th>
+        <th>{{ 'Events::EventNameEn' | abpLocalization }}</th>
+        <th>{{ 'Events::EventNameAr' | abpLocalization }}</th>
+        <th>{{ 'Events::Email' | abpLocalization }}</th>
+        <th>{{ 'Events::RegisteredAt' | abpLocalization }}</th>
+        <th>{{ 'Events::Status' | abpLocalization }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let registration of registrations">
+        <td>{{ registration.userName }}</td>
+        <td>{{ registration.eventNameEn }}</td>
+        <td>{{ registration.eventNameAr }}</td>
+        <td>{{ registration.email }}</td>
+        <td>{{ registration.registeredAt | date:'short' }}</td>
+        <td>{{ registration.isCanceled ? ('Canceled' | abpLocalization) : ('Active' | abpLocalization) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

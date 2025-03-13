@@ -10,6 +10,14 @@ export class EventService {
   apiName = 'Default';
   
 
+  active = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, boolean>({
+      method: 'POST',
+      url: `/api/app/event/${id}/active`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   create = (input: CreateUpdateEventDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, EventDto>({
       method: 'POST',

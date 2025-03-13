@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Identity;
 
 namespace RAG.EventRegistrationTask.Events.Entities
 {
@@ -11,6 +12,8 @@ namespace RAG.EventRegistrationTask.Events.Entities
         public DateTime RegisteredAt { get;  set; }
         public bool? IsCanceled { get;  set; }
         public virtual Event Event { get;  set; }
+
+        public virtual IdentityUser User { get; set; }
 
         public EventRegistration() { } // For EF Core
 

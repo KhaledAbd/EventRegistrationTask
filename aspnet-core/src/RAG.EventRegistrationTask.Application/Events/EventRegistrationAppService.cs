@@ -2,9 +2,12 @@
 using RAG.EventRegistrationTask.Events.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.ObjectMapping;
 
 namespace RAG.EventRegistrationTask.Events
 {
@@ -43,10 +46,27 @@ namespace RAG.EventRegistrationTask.Events
 
         }
 
-        public async Task<List<EventRegistrationDto>> GetRegistrationsForEventAsync(Guid eventId)
+        public async Task<PagedResultDto<EventRegistrationDto>> GetRegistrationsEventAsync(Guid eventId,  int skipCount = 0, int maxResultCount = 10)
         {
-            var registrations = await _eventRegistrationRepository.GetListAsync(r => r.EventId == eventId);
-            return ObjectMapper.Map<List<EventRegistration>, List<EventRegistrationDto>>(registrations);
+            var query = (await _eventRegistrationRepository
+                .WithDetailsAsync(r => r.User, cc => cc.Event))
+                .AsQueryable()
+                .Where(r => r.EventId == eventId);
+
+            // Get total count before applying paging
+            var totalCount = await AsyncExecuter.CountAsync(query);
+
+            // Apply paging and mapping
+            var registrations = await AsyncExecuter.ToListAsync(
+                query
+                    .Skip(skipCount)
+                    .Take(maxResultCount)
+            );
+
+            return new PagedResultDto<EventRegistrationDto>(
+                totalCount,
+                ObjectMapper.Map<List<EventRegistration>, List<EventRegistrationDto>>(registrations)
+            );
         }
     }
 }

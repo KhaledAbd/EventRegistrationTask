@@ -55,6 +55,7 @@
       <th>{{ 'Events::Remove' | abpLocalization }}</th>
       <th>{{ 'Events::Edit' | abpLocalization }}</th>
       <th>{{ 'Events::Active' | abpLocalization }}</th>
+      <th>{{ 'Events::Show' | abpLocalization }}</th>
     </tr>
   </thead>
   <tbody>
@@ -78,7 +79,11 @@
       <td> <button (click)="active(item.event.id)" class="btn btn-warning" *ngIf="item.hasActiveAction">{{
           (item.event.isActive ? 'Events::UnActive' : 'Events::Active' ) | abpLocalization
           }}</button></td>
-
+      <td>
+        <button [routerLink]="'/admin/view-event-registration/' + item.event.id" class="btn btn-secondary">{{
+          'Events::Show'
+          | abpLocalization }}</button>
+      </td>
     </tr>
   </tbody>
 </table>

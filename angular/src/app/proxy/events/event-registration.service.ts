@@ -1,5 +1,6 @@
 import type { EventRegistrationDto } from './models';
 import { RestService, Rest } from '@abp/ng.core';
+import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -17,10 +18,11 @@ export class EventRegistrationService {
     { apiName: this.apiName,...config });
   
 
-  getRegistrationsForEvent = (eventId: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, EventRegistrationDto[]>({
+  getRegistrationsEvent = (eventId: string, skipCount?: number, maxResultCount: number = 10, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PagedResultDto<EventRegistrationDto>>({
       method: 'GET',
-      url: `/api/app/event-registration/registrations-for-event/${eventId}`,
+      url: `/api/app/event-registration/registrations-event/${eventId}`,
+      params: { skipCount, maxResultCount },
     },
     { apiName: this.apiName,...config });
   

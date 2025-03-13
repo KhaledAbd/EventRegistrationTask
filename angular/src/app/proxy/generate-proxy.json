@@ -1408,6 +1408,43 @@
               },
               "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventAppService"
+            },
+            "ActiveAsyncById": {
+              "uniqueName": "ActiveAsyncById",
+              "name": "ActiveAsync",
+              "httpMethod": "POST",
+              "url": "api/app/event/{id}/active",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Boolean",
+                "typeSimple": "boolean"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "RAG.EventRegistrationTask.Events.EventAppService"
             }
           }
         },
@@ -1458,7 +1495,7 @@
                   }
                 },
                 {
-                  "name": "GetRegistrationsForEventAsync",
+                  "name": "GetRegistrationsEventAsync",
                   "parametersOnMethod": [
                     {
                       "name": "eventId",
@@ -1467,11 +1504,27 @@
                       "typeSimple": "string",
                       "isOptional": false,
                       "defaultValue": null
+                    },
+                    {
+                      "name": "skipCount",
+                      "typeAsString": "System.Int32, System.Private.CoreLib",
+                      "type": "System.Int32",
+                      "typeSimple": "number",
+                      "isOptional": true,
+                      "defaultValue": 0
+                    },
+                    {
+                      "name": "maxResultCount",
+                      "typeAsString": "System.Int32, System.Private.CoreLib",
+                      "type": "System.Int32",
+                      "typeSimple": "number",
+                      "isOptional": true,
+                      "defaultValue": 10
                     }
                   ],
                   "returnValue": {
-                    "type": "System.Collections.Generic.List<RAG.EventRegistrationTask.Events.EventRegistrationDto>",
-                    "typeSimple": "[RAG.EventRegistrationTask.Events.EventRegistrationDto]"
+                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventRegistrationDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventRegistrationDto>"
                   }
                 }
               ]
@@ -1552,11 +1605,11 @@
               "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventRegistrationAppService"
             },
-            "GetRegistrationsForEventAsyncByEventId": {
-              "uniqueName": "GetRegistrationsForEventAsyncByEventId",
-              "name": "GetRegistrationsForEventAsync",
+            "GetRegistrationsEventAsyncByEventIdAndSkipCountAndMaxResultCount": {
+              "uniqueName": "GetRegistrationsEventAsyncByEventIdAndSkipCountAndMaxResultCount",
+              "name": "GetRegistrationsEventAsync",
               "httpMethod": "GET",
-              "url": "api/app/event-registration/registrations-for-event/{eventId}",
+              "url": "api/app/event-registration/registrations-event/{eventId}",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
@@ -1566,6 +1619,22 @@
                   "typeSimple": "string",
                   "isOptional": false,
                   "defaultValue": null
+                },
+                {
+                  "name": "skipCount",
+                  "typeAsString": "System.Int32, System.Private.CoreLib",
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": true,
+                  "defaultValue": 0
+                },
+                {
+                  "name": "maxResultCount",
+                  "typeAsString": "System.Int32, System.Private.CoreLib",
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": true,
+                  "defaultValue": 10
                 }
               ],
               "parameters": [
@@ -1580,11 +1649,35 @@
                   "constraintTypes": [],
                   "bindingSourceId": "Path",
                   "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "skipCount",
+                  "name": "skipCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "maxResultCount",
+                  "name": "maxResultCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
                 }
               ],
               "returnValue": {
-                "type": "System.Collections.Generic.List<RAG.EventRegistrationTask.Events.EventRegistrationDto>",
-                "typeSimple": "[RAG.EventRegistrationTask.Events.EventRegistrationDto]"
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventRegistrationDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<RAG.EventRegistrationTask.Events.EventRegistrationDto>"
               },
               "allowAnonymous": false,
               "implementFrom": "RAG.EventRegistrationTask.Events.IEventRegistrationAppService"
@@ -4698,7 +4791,7 @@
       ]
     },
     "RAG.EventRegistrationTask.Events.EventRegistrationDto": {
-      "baseType": "Volo.Abp.Application.Dtos.EntityDto<System.Int32>",
+      "baseType": "Volo.Abp.Application.Dtos.EntityDto<System.Guid>",
       "isEnum": false,
       "enumNames": null,
       "enumValues": null,
@@ -4789,7 +4882,19 @@
           "regex": null
         },
         {
-          "name": "EventLocation",
+          "name": "Email",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "UserName",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",

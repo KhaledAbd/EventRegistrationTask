@@ -17,6 +17,11 @@ namespace RAG.EventRegistrationTask.Configurations
 
             builder.Property(er => er.RegisteredAt).IsRequired();
             builder.Property(er => er.IsCanceled).HasDefaultValue(false);
+
+            builder.HasOne(e => e.User) // Define the relation
+           .WithMany()
+           .HasForeignKey(e => e.UserId)
+           .IsRequired();
         }
     }
 }
