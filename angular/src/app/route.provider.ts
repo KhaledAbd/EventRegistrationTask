@@ -10,7 +10,22 @@ function configureRoutes(routesService: RoutesService) {
     routesService.add([
       {
         path: '/',
-        name: '::Menu:Home',
+        name: 'EventRegistrationTask::Menu:Home',
+        iconClass: 'fas fa-home',
+        order: 1,
+        layout: eLayoutType.application,
+      },
+      {
+        path: 'admin/events',
+        name: 'Events::EventTitle',
+        iconClass: 'fas fa-list',
+        order: 2,
+        layout: eLayoutType.account,
+        requiredPolicy: 'EventRegistrationTask.Event.List',
+      },
+      {
+        path: 'user',
+        name: 'Events::Title',
         iconClass: 'fas fa-home',
         order: 1,
         layout: eLayoutType.application,

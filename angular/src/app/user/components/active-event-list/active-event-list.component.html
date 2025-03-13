@@ -1,0 +1,64 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">{{ 'Events::Title' | abpLocalization }}</h2>
+<!--
+<form (ngSubmit)="getListActive()" class="mb-4">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="organizerName">{{ 'Events::OrganizerName' | abpLocalization }}</label>
+        <input type="text" id="organizerName" [(ngModel)]="filter.organizerName" name="organizerName"
+          class="form-control" [placeholder]="'Events::OrganizerNamePlaceholder' | abpLocalization" />
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="retrieveOwnUser">
+          {{ 'Events::EventName' | abpLocalization }}
+        </label>
+        <input type="text" id="retrieveOwnUser" [(ngModel)]="filter.eventName" name="retrieveOwnUser"
+        class="form-control"  />
+
+      </div>
+    </div>
+  </div>
+
+
+  <button type="submit" class="btn btn-primary mt-3">
+    {{ 'Events::ApplyFilters' | abpLocalization }}
+  </button>
+</form> -->
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let item of events">
+      <div class="card shadow-lg">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.event.title }}</h5>
+          <p class="card-text">{{ item.event.nameEn }}</p>
+          <p>
+            <strong>{{ item.event.startDate | date:'short' }}</strong>
+          </p>
+          <p>
+            <strong>{{ 'Events::Location' | abpLocalization }}:</strong>
+            {{ item.event.location }}
+          </p>
+
+          <div class="d-flex justify-content-between mt-3">
+            <button *ngIf="item.showRegisterAndCancel"
+              class="btn btn-success"
+              (click)="registerForEvent(item)"
+              [disabled]="item.isRegistered">
+              {{ item.isRegistered ? ('Events::Registered' | abpLocalization) : ('Events::Register' | abpLocalization) }}
+            </button>
+
+            <button *ngIf="item.showRegisterAndCancel"
+              class="btn btn-danger"
+              (click)="cancelRegistration(item)"
+              [disabled]="!item.isRegistered">
+              {{ 'Events::Cancel' | abpLocalization }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

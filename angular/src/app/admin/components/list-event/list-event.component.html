@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4> {{ 'Events::EventList' | abpLocalization }} </h4>
+  <a [routerLink]="['/admin/create-update-event']" class="btn btn-primary d-flex align-items-center">
+    <i class="bi bi-plus-lg"></i>
+    <span class="me-2">
+      {{ 'Events::EventAdd' | abpLocalization }}
+    </span>
+  </a>
+</div>
+<form (ngSubmit)="getData()" class="mb-4">
+  <div class="row">
+    <!-- Organizer Name -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="organizerName">{{ 'Events::OrganizerName' | abpLocalization }}</label>
+        <input type="text" id="organizerName" [(ngModel)]="filter.organizerName" name="organizerName"
+          class="form-control" [placeholder]="'Events::OrganizerNamePlaceholder' | abpLocalization" />
+      </div>
+    </div>
+  </div>
+  <!-- Checkbox for Retrieve Own User -->
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="form-check mt-4">
+        <input type="checkbox" id="retrieveOwnUser" [(ngModel)]="filter.retrieveOwnUser" name="retrieveOwnUser"
+          class="form-check-input" />
+        <label for="retrieveOwnUser" class="form-check-label">
+          {{ 'Events::ShowOnlyMyEvents' | abpLocalization }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary mt-3">
+    {{ 'Events::ApplyFilters' | abpLocalization }}
+  </button>
+</form>
+
+
+<table *ngIf="events && events.length > 0" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>{{ 'Events::Name' | abpLocalization }}</th>
+      <th>{{ 'Events::Capacity' | abpLocalization }}</th>
+      <th>{{ 'Events::IsOnline' | abpLocalization }}</th>
+      <th>{{ 'Events::StartDate' | abpLocalization }}</th>
+      <th>{{ 'Events::EndDate' | abpLocalization }}</th>
+      <th>{{ 'Events::Location' | abpLocalization }}</th>
+      <th>{{ 'Events::CountRegistration' | abpLocalization }}</th>
+      <th>{{ 'Events::Link' | abpLocalization }}</th>
+      <th>{{ 'Events::OrganizerName' | abpLocalization }}</th>
+      <th>{{ 'Events::Remove' | abpLocalization }}</th>
+      <th>{{ 'Events::Edit' | abpLocalization }}</th>
+      <th>{{ 'Events::Active' | abpLocalization }}</th>
+      <th>{{ 'Events::Show' | abpLocalization }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of events">
+      <td>{{ item.event.nameEn || item.event.nameAr }}</td>
+      <td>{{ item.event.capacity }}</td>
+      <td>{{ (item.event.isOnline ? 'Events::Online' : 'Events::Offline' ) | abpLocalization}}</td>
+      <td>{{ item.event.startDate | date:'short' }}</td>
+      <td>{{ item.event.endDate | date:'short' }}</td>
+      <td>{{ item.event.location}}</td>
+      <td>{{ item.event.CountRegistration}}</td>
+      <td><a *ngIf="item.event.link" [href]="item.event.link" target="_blank">{{ 'Show' | abpLocalization }}</a></td>
+      <td>{{ '@'+item.event.organizerName }}</td>
+      <td> <button (click)="remove(item.event.id)" class="btn btn-warning" *ngIf="canDelete && item.hasActiveAction">{{ 'Events::Remove' | abpLocalization }}</button></td>
+      <td>
+        <button [routerLink]="'/admin/create-update-event/' + item.event.id" class="btn btn-secondary"
+          *ngIf="item.canEdit">{{ 'Events::Edit'
+          | abpLocalization }}</button>
+      </td>
+      <td> <button (click)="active(item.event)" class="btn btn-warning" *ngIf="item.hasActiveAction">{{
+          (item.event.isActive ? 'Events::UnActive' : 'Events::Active' ) | abpLocalization
+          }}</button></td>
+      <td>
+        <button [routerLink]="'/admin/view-event-registration/' + item.event.id" class="btn btn-secondary">{{
+          'Events::Show'
+          | abpLocalization }}</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
